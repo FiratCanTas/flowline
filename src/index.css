@@ -1,1 +1,37 @@
 @import 'tailwindcss';
+
+:root {
+  --bg: var(--color-white);
+  --text: var(--color-zinc-900);
+  --border: var(--color-zinc-200);
+  --surface-1: var(--color-white);
+  --surface-2: var(--color-zinc-50);
+  --text-muted: var(--color-zinc-500);
+  --accent: var(--color-indigo-600);
+  --accent-hover: var(--color-indigo-700);
+  --focus-ring: var(--color-indigo-500);
+}
+
+.dark {
+  --bg: var(--color-zinc-950);
+  --text: var(--color-zinc-50);
+  --border: var(--color-zinc-800);
+  --surface-1: var(--color-zinc-900);
+  --surface-2: var(--color-zinc-800);
+  --text-muted: var(--color-zinc-400);
+  --accent: var(--color-indigo-400);
+  --accent-hover: var(--color-indigo-300);
+  --focus-ring: var(--color-indigo-400);
+}
+
+@theme {
+  --color-bg: var(--bg);
+  --color-text: var(--text);
+  --color-border: var(--border);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-focus-ring: var(--focus-ring);
+}
