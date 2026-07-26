@@ -1,5 +1,11 @@
+import Button from './components/ui/Button';
+
 const App = () => {
-  return <div className="bg-bg text-text border-border border p-4">New Product</div>;
+  return (
+    <div className="bg-bg text-text min-h-screen p-8">
+      <Button>Kaydet</Button>
+    </div>
+  );
 };
 
 export default App;
