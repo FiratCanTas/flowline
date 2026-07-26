@@ -10,6 +10,7 @@
   --accent: var(--color-indigo-600);
   --accent-hover: var(--color-indigo-700);
   --focus-ring: var(--color-indigo-500);
+  --accent-foreground: var(--color-white);
 }
 
 .dark {
@@ -22,6 +23,7 @@
   --accent: var(--color-indigo-400);
   --accent-hover: var(--color-indigo-300);
   --focus-ring: var(--color-indigo-400);
+  --accent-foreground: var(--color-zinc-900);
 }
 
 @theme {
@@ -34,4 +36,5 @@
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-focus-ring: var(--focus-ring);
+  --color-accent-foreground: var(--accent-foreground);
 }
