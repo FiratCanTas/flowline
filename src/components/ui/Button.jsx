@@ -4,9 +4,15 @@ const variants = {
   ghost: 'text-text hover:bg-surface-2',
 };
 
-const Button = ({ variant = 'primary', className = '', size, children, ...props }) => {
+const sizes = {
+  sm: 'px-3 py-1.5 text-xs',
+  md: 'px-4 py-2 text-sm',
+  lg: 'px-6 py-3 text-base',
+};
+
+const Button = ({ variant = 'primary', className = '', size = 'md', children, ...props }) => {
   return (
-    <button className={`rounded-md px-4 py-2 ${variants[variant]} ${className}`} {...props}>
+    <button className={`rounded-md ${sizes[size]} ${variants[variant]} ${className}`} {...props}>
       {children}
     </button>
   );
