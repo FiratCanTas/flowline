@@ -47,3 +47,10 @@
   --color-danger-foreground: var(--danger-foreground);
   --color-danger-hover: var(--danger-hover);
 }
+
+@layer base {
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+  }
+}
