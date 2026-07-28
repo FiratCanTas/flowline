@@ -1,10 +1,19 @@
-import Button from './components/ui/Button';
+import { Route, Routes } from 'react-router';
+import Dashboard from './pages/Dashboard';
+import Contacts from './pages/Contacts';
+import Deals from './pages/Deals';
+import Activities from './pages/Activities';
+import NotFound from './pages/NotFound';
 
 const App = () => {
   return (
-    <div className="bg-bg text-text min-h-screen p-8">
-      <Button>Kaydet</Button>
-    </div>
+    <Routes>
+      <Route path="/" element={<Dashboard />} />
+      <Route path="/contacts" element={<Contacts />} />
+      <Route path="/deals" element={<Deals />} />
+      <Route path="/activities" element={<Activities />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 
