@@ -11,6 +11,9 @@
   --accent-hover: var(--color-indigo-700);
   --focus-ring: var(--color-indigo-500);
   --accent-foreground: var(--color-white);
+  --danger: var(--color-red-600);
+  --danger-foreground: var(--color-white);
+  --danger-hover: var(--color-red-800);
 }
 
 .dark {
@@ -24,6 +27,9 @@
   --accent-hover: var(--color-indigo-300);
   --focus-ring: var(--color-indigo-400);
   --accent-foreground: var(--color-zinc-900);
+  --danger: var(--color-red-400);
+  --danger-foreground: var(--color-zinc-900);
+  --danger-hover: var(--color-red-300);
 }
 
 @theme {
@@ -37,4 +43,7 @@
   --color-accent-hover: var(--accent-hover);
   --color-focus-ring: var(--focus-ring);
   --color-accent-foreground: var(--accent-foreground);
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-danger-hover: var(--danger-hover);
 }
