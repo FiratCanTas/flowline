@@ -8,7 +8,7 @@
   --surface-2: var(--color-zinc-50);
   --text-muted: var(--color-zinc-500);
   --accent: var(--color-indigo-600);
-  --accent-hover: var(--color-indigo-700);
+  --accent-hover: var(--color-indigo-800);
   --focus-ring: var(--color-indigo-500);
   --accent-foreground: var(--color-white);
   --danger: var(--color-red-600);
