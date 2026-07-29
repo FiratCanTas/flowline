@@ -1,4 +1,5 @@
-import { Link, Outlet } from 'react-router';
+import { Outlet } from 'react-router';
+import NavItem from './NavItem';
 
 const AppShell = () => {
   return (
@@ -6,30 +7,10 @@ const AppShell = () => {
       <aside className="bg-surface-1 border-border w-60 border-r p-4">
         <p className="text-text mb-6 text-lg font-semibold">Flowline</p>
         <nav className="flex flex-col gap-1">
-          <Link
-            to={'/'}
-            className="text-text-muted hover:bg-surface-2 hover:text-text rounded-md px-3 py-2"
-          >
-            Dashboard
-          </Link>
-          <Link
-            to={'/contacts'}
-            className="text-text-muted hover:bg-surface-2 hover:text-text rounded-md px-3 py-2"
-          >
-            Contacts
-          </Link>
-          <Link
-            to={'/activities'}
-            className="text-text-muted hover:bg-surface-2 hover:text-text rounded-md px-3 py-2"
-          >
-            Activities
-          </Link>
-          <Link
-            to={'/deals'}
-            className="text-text-muted hover:bg-surface-2 hover:text-text rounded-md px-3 py-2"
-          >
-            Deals
-          </Link>
+          <NavItem to="/">Dashboard</NavItem>
+          <NavItem to="/contacts">Contacts</NavItem>
+          <NavItem to="/activities">Activities</NavItem>
+          <NavItem to="/deals">Deals</NavItem>
         </nav>
       </aside>
 
