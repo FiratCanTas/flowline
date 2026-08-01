@@ -25,7 +25,7 @@ const AppShell = () => {
         </nav>
       </aside>
 
-      <div className="flex flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col">
         <header className="bg-surface-1 border-border flex h-14 items-center gap-3 border-b px-6">
           <button
             aria-label="Open Menu"
@@ -37,7 +37,7 @@ const AppShell = () => {
             <span className="bg-text block h-0.5 w-5 rounded-full" />
             <span className="bg-text block h-0.5 w-5 rounded-full" />
           </button>
-          <p>Topbar</p>
+          <p className="min-w-0 flex-1 truncate">Dashboard Overview and Analytics</p>
         </header>
 
         <main className="flex-1 overflow-y-auto p-6">
