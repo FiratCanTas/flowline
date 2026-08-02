@@ -13,7 +13,10 @@ const sizes = {
 
 const Button = ({ variant = 'primary', className = '', size = 'md', children, ...props }) => {
   return (
-    <button className={`rounded-md ${sizes[size]} ${variants[variant]} ${className}`} {...props}>
+    <button
+      className={`focus-visible:outline-focus-ring rounded-md outline-offset-2 ${sizes[size]} ${variants[variant]} ${className}`}
+      {...props}
+    >
       {children}
     </button>
   );
