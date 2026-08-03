@@ -1,9 +1,48 @@
 import { Outlet } from 'react-router';
 import NavItem from './NavItem';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+const SunIcon = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    className="h-5 w-5"
+  >
+    <circle cx="12" cy="12" r="5" />
+    <line x1="12" y1="1" x2="12" y2="3" />
+    <line x1="12" y1="21" x2="12" y2="23" />
+    <line x1="4.2" y1="4.2" x2="5.6" y2="5.6" />
+    <line x1="18.4" y1="18.4" x2="19.8" y2="19.8" />
+    <line x1="1" y1="12" x2="3" y2="12" />
+    <line x1="21" y1="12" x2="23" y2="12" />
+    <line x1="4.2" y1="19.8" x2="5.6" y2="18.4" />
+    <line x1="18.4" y1="5.6" x2="19.8" y2="4.2" />
+  </svg>
+);
+
+const MoonIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+    <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" />
+  </svg>
+);
 
 const AppShell = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') === 'dark');
+
+  useEffect(() => {
+    const html = document.documentElement;
+    if (isDark) {
+      localStorage.setItem('theme', 'dark');
+      html.classList.add('dark');
+    } else {
+      localStorage.setItem('theme', 'light');
+      html.classList.remove('dark');
+    }
+  }, [isDark]);
 
   return (
     <div className="flex h-screen">
@@ -38,6 +77,14 @@ const AppShell = () => {
             <span className="bg-text block h-0.5 w-5 rounded-full" />
           </button>
           <p className="min-w-0 flex-1 truncate">Dashboard Overview and Analytics</p>
+          <button
+            aria-label={`${isDark ? 'Switch to light mode' : 'Switch to dark mode'}`}
+            type="button"
+            className="hover:bg-surface-2 focus-visible:outline-focus-ring rounded-md p-2 outline-offset-2"
+            onClick={() => setIsDark((prev) => !prev)}
+          >
+            {isDark ? <SunIcon /> : <MoonIcon />}
+          </button>
         </header>
 
         <main className="flex-1 overflow-y-auto p-6">
