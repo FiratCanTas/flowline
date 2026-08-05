@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { getContacts } from '../features/contacts/api/contacts';
-import { useState } from 'react';
+import { useSearchParams } from 'react-router';
 
 const Contacts = () => {
-  const [search, setSearch] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { isLoading, error, data } = useQuery({
     queryKey: ['contacts'],
@@ -16,14 +16,23 @@ const Contacts = () => {
     return <span>{error.message}</span>;
   }
 
+  const search = searchParams.get('search') || '';
+
   const handleSearch = (event) => {
     const text = event.target.value;
-    setSearch(text);
+    setSearchParams(
+      (prevParams) => {
+        prevParams.set('search', text);
+
+        return prevParams;
+      },
+      { replace: true },
+    );
   };
 
   const filteredContacts = data?.filter(
     (contact) =>
-      !search.trim() ||
+      !search?.trim() ||
       contact.name.toLowerCase().includes(search.toLowerCase()) ||
       contact.company.toLowerCase().includes(search.toLowerCase()),
   );
