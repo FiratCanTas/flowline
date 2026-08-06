@@ -10,13 +10,8 @@ const Contacts = () => {
     queryFn: getContacts,
   });
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  } else if (error) {
-    return <span>{error.message}</span>;
-  }
-
   const search = searchParams.get('search') || '';
+  const sort = searchParams.get('sort') || '';
 
   const handleSearch = (event) => {
     const text = event.target.value;
@@ -30,18 +25,56 @@ const Contacts = () => {
     );
   };
 
-  const filteredContacts = data?.filter(
-    (contact) =>
-      !search?.trim() ||
-      contact.name.toLowerCase().includes(search.toLowerCase()) ||
-      contact.company.toLowerCase().includes(search.toLowerCase()),
-  );
+  const handleSort = (event) => {
+    const sortValue = event.target.value;
+    setSearchParams(
+      (prevParams) => {
+        prevParams.set('sort', sortValue);
+
+        return prevParams;
+      },
+      { replace: true },
+    );
+  };
+
+  let filteredContacts = data?.length ? [...data] : [];
+  if (search?.trim())
+    filteredContacts = filteredContacts?.filter(
+      (contact) =>
+        contact.name.toLowerCase().includes(search.toLowerCase()) ||
+        contact.company.toLowerCase().includes(search.toLowerCase()),
+    );
+
+  let sortedContacts = filteredContacts?.length ? [...filteredContacts] : [];
+
+  if (sort?.trim()) {
+    sortedContacts = sortedContacts?.sort((a, b) => {
+      const firstName = a.name.toLowerCase();
+      const secondName = b.name.toLowerCase();
+      if (sort === 'asc') {
+        return firstName.localeCompare(secondName);
+      } else if (sort === 'desc') {
+        return secondName.localeCompare(firstName);
+      }
+    });
+  }
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  } else if (error) {
+    return <span>{error.message}</span>;
+  }
 
   return (
     <div>
       <input type="text" value={search} onChange={handleSearch} className="border" />
+      <select value={sort} onChange={handleSort} name="sort" id="sort">
+        <option value="">Please choose an option</option>
+        <option value="asc">ASC</option>
+        <option value="desc">DESC</option>
+      </select>
       <ul>
-        {filteredContacts?.map((contact) => (
+        {sortedContacts?.map((contact) => (
           <li key={contact.id}>
             {contact.name} - {contact.company}
           </li>
