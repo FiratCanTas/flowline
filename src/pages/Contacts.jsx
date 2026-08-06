@@ -12,24 +12,34 @@ const Contacts = () => {
 
   const search = searchParams.get('search') || '';
   const sort = searchParams.get('sort') || '';
+  const currentPage = Number(searchParams.get('page')) || 1;
+  const pageSize = 5;
 
-  const handleSearch = (event) => {
-    const text = event.target.value;
+  const handleSearchAndSort = (event) => {
+    const { name, value } = event.target;
     setSearchParams(
       (prevParams) => {
-        prevParams.set('search', text);
-
+        prevParams.set(name, value);
+        prevParams.delete('page');
         return prevParams;
       },
       { replace: true },
     );
   };
 
-  const handleSort = (event) => {
-    const sortValue = event.target.value;
+  const handlePagination = (event) => {
+    const { name } = event.target;
+    let newPage;
+
+    if (name === 'prev') {
+      newPage = currentPage - 1;
+    } else {
+      newPage = currentPage + 1;
+    }
+
     setSearchParams(
       (prevParams) => {
-        prevParams.set('sort', sortValue);
+        prevParams.set('page', newPage);
 
         return prevParams;
       },
@@ -38,12 +48,15 @@ const Contacts = () => {
   };
 
   let filteredContacts = data?.length ? [...data] : [];
-  if (search?.trim())
+  if (search?.trim()) {
     filteredContacts = filteredContacts?.filter(
       (contact) =>
         contact.name.toLowerCase().includes(search.toLowerCase()) ||
         contact.company.toLowerCase().includes(search.toLowerCase()),
     );
+  }
+
+  const totalPageNumber = Math.ceil(filteredContacts?.length / pageSize);
 
   let sortedContacts = filteredContacts?.length ? [...filteredContacts] : [];
 
@@ -59,6 +72,13 @@ const Contacts = () => {
     });
   }
 
+  let paginatedContacts = sortedContacts?.length ? [...sortedContacts] : [];
+
+  paginatedContacts = paginatedContacts.slice(
+    pageSize * currentPage - pageSize,
+    pageSize * currentPage,
+  );
+
   if (isLoading) {
     return <span>Loading...</span>;
   } else if (error) {
@@ -67,19 +87,39 @@ const Contacts = () => {
 
   return (
     <div>
-      <input type="text" value={search} onChange={handleSearch} className="border" />
-      <select value={sort} onChange={handleSort} name="sort" id="sort">
+      <input
+        type="text"
+        name="search"
+        value={search}
+        onChange={handleSearchAndSort}
+        className="border"
+      />
+      <select value={sort} onChange={handleSearchAndSort} name="sort" id="sort">
         <option value="">Please choose an option</option>
         <option value="asc">ASC</option>
         <option value="desc">DESC</option>
       </select>
       <ul>
-        {sortedContacts?.map((contact) => (
+        {paginatedContacts?.map((contact) => (
           <li key={contact.id}>
             {contact.name} - {contact.company}
           </li>
         ))}
       </ul>
+      <div>
+        <button onClick={handlePagination} name="prev" type="button" disabled={currentPage === 1}>
+          Prev
+        </button>
+        <span>{currentPage}</span>
+        <button
+          onClick={handlePagination}
+          name="next"
+          type="button"
+          disabled={currentPage === totalPageNumber || totalPageNumber === 0}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };
