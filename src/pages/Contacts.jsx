@@ -99,13 +99,38 @@ const Contacts = () => {
         <option value="asc">ASC</option>
         <option value="desc">DESC</option>
       </select>
-      <ul>
-        {paginatedContacts?.map((contact) => (
-          <li key={contact.id}>
-            {contact.name} - {contact.company}
-          </li>
-        ))}
-      </ul>
+
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Company</th>
+            <th scope="col">Position</th>
+            <th scope="col">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {!data.length ? (
+            <tr>
+              <td colSpan={4}>There is no contact data yet.</td>
+            </tr>
+          ) : search && !paginatedContacts.length ? (
+            <tr>
+              <td colSpan={4}>No results found matching "{search}"</td>
+            </tr>
+          ) : (
+            paginatedContacts?.map(({ id, name, company, position, email }) => (
+              <tr key={id}>
+                <td>{name}</td>
+                <td>{company}</td>
+                <td>{position}</td>
+                <td>{email}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+
       <div>
         <button onClick={handlePagination} name="prev" type="button" disabled={currentPage === 1}>
           Prev
