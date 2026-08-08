@@ -79,6 +79,11 @@ const Contacts = () => {
     pageSize * currentPage,
   );
 
+  let emptyMessage = null;
+  if (!data?.length) emptyMessage = 'There is no contact data yet.';
+  else if (search && !paginatedContacts?.length)
+    emptyMessage = `No results found matching "${search}"`;
+
   if (isLoading) {
     return <span>Loading...</span>;
   } else if (error) {
@@ -100,7 +105,23 @@ const Contacts = () => {
         <option value="desc">DESC</option>
       </select>
 
-      <table>
+      <div className="flex flex-col gap-3 md:hidden">
+        {emptyMessage ? (
+          <p>{emptyMessage}</p>
+        ) : (
+          paginatedContacts?.map(({ id, name, company, position, email }) => (
+            <div key={id} className="border-border bg-surface-1 space-y-1 rounded-md border p-4">
+              <p className="text-text text-base font-semibold">{name}</p>
+              <p className="text-text-muted text-sm">
+                {company} · {position}
+              </p>
+              <p className="text-text-muted text-xs">{email}</p>
+            </div>
+          ))
+        )}
+      </div>
+
+      <table className="hidden md:table">
         <thead>
           <tr>
             <th scope="col">Name</th>
@@ -110,13 +131,9 @@ const Contacts = () => {
           </tr>
         </thead>
         <tbody>
-          {!data.length ? (
+          {emptyMessage ? (
             <tr>
-              <td colSpan={4}>There is no contact data yet.</td>
-            </tr>
-          ) : search && !paginatedContacts.length ? (
-            <tr>
-              <td colSpan={4}>No results found matching "{search}"</td>
+              <td colSpan={4}>{emptyMessage}</td>
             </tr>
           ) : (
             paginatedContacts?.map(({ id, name, company, position, email }) => (
