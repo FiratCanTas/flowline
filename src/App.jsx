@@ -5,6 +5,7 @@ import Deals from './pages/Deals';
 import Activities from './pages/Activities';
 import NotFound from './pages/NotFound';
 import AppShell from './components/layout/AppShell';
+import ContactDetail from './pages/ContactDetail';
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <Route path="/" element={<AppShell />}>
         <Route index element={<Dashboard />} />
         <Route path="/contacts" element={<Contacts />} />
+        <Route path="/contacts/:id" element={<ContactDetail />} />
         <Route path="/deals" element={<Deals />} />
         <Route path="/activities" element={<Activities />} />
       </Route>
