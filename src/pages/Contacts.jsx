@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getContacts } from '../features/contacts/api/contacts';
-import { useSearchParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 
 const Contacts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -111,7 +111,13 @@ const Contacts = () => {
         ) : (
           paginatedContacts?.map(({ id, name, company, position, email }) => (
             <div key={id} className="border-border bg-surface-1 space-y-1 rounded-md border p-4">
-              <p className="text-text text-base font-semibold">{name}</p>
+              <Link
+                to={`./${id}`}
+                className="text-text hover:bg-surface-2 hover:text-text rounded-md text-base font-semibold"
+              >
+                {name}
+              </Link>
+
               <p className="text-text-muted text-sm">
                 {company} · {position}
               </p>
@@ -138,7 +144,11 @@ const Contacts = () => {
           ) : (
             paginatedContacts?.map(({ id, name, company, position, email }) => (
               <tr key={id}>
-                <td>{name}</td>
+                <td>
+                  <Link to={`./${id}`} className="hover:bg-surface-2 hover:text-text rounded-md">
+                    {name}
+                  </Link>
+                </td>
                 <td>{company}</td>
                 <td>{position}</td>
                 <td>{email}</td>
