@@ -1,5 +1,33 @@
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router';
+import { getContacts } from '../features/contacts/api/contacts';
+
 const ContactDetail = () => {
-  return <>contact detail</>;
+  const { id: contactId } = useParams();
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['contacts'],
+    queryFn: getContacts,
+  });
+
+  const contact = data?.find((contact) => contact.id === contactId);
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  } else if (error) {
+    return <span>{error.message}</span>;
+  } else if (!contact) return <p>The contact has not found.</p>;
+
+  const { name, company, position, email, phone } = contact;
+  return (
+    <div>
+      <p>{name}</p>
+      <p>{company}</p>
+      <p>{position}</p>
+      <p>{email}</p>
+      <p>{phone}</p>
+    </div>
+  );
 };
 
 export default ContactDetail;
