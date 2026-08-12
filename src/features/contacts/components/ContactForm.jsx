@@ -4,7 +4,7 @@ import Input from '../../../components/ui/Input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import contactSchema from '../schema';
 
-const ContactForm = ({ defaultValues }) => {
+const ContactForm = ({ defaultValues, onSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -14,11 +14,8 @@ const ContactForm = ({ defaultValues }) => {
     defaultValues: defaultValues,
   });
 
-  const handleFormSubmit = (data) => {
-    console.log('formData:::', data);
-  };
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)} className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <Input label="Name" id="name" error={errors?.name?.message} {...register('name')} />
       <Input label="Email" id="email" error={errors?.email?.message} {...register('email')} />
       <Input label="Phone" id="phone" error={errors?.phone?.message} {...register('phone')} />
