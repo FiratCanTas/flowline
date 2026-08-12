@@ -8,6 +8,7 @@ const Input = forwardRef((props, ref) => {
       <input
         className={`focus-visible:outline-focus-ring border ${error ? 'border-danger' : 'border-border'}`}
         ref={ref}
+        id={id}
         {...rest}
       />
       {error && <p>{error}</p>}
