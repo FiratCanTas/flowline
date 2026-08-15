@@ -92,18 +92,29 @@ const Contacts = () => {
 
   return (
     <div>
-      <input
-        type="text"
-        name="search"
-        value={search}
-        onChange={handleSearchAndSort}
-        className="border"
-      />
-      <select value={sort} onChange={handleSearchAndSort} name="sort" id="sort">
-        <option value="">Please choose an option</option>
-        <option value="asc">ASC</option>
-        <option value="desc">DESC</option>
-      </select>
+      <div className="flex justify-between">
+        <div>
+          <input
+            type="text"
+            name="search"
+            value={search}
+            onChange={handleSearchAndSort}
+            className="border"
+          />
+          <select value={sort} onChange={handleSearchAndSort} name="sort" id="sort">
+            <option value="">Please choose an option</option>
+            <option value="asc">ASC</option>
+            <option value="desc">DESC</option>
+          </select>
+        </div>
+
+        <Link
+          className="bg-accent text-accent-foreground hover:bg-accent-hover focus-visible:outline-focus-ring rounded-md px-4 py-2 text-sm outline-offset-2"
+          to="./new"
+        >
+          Add New Contact
+        </Link>
+      </div>
 
       <div className="flex flex-col gap-3 md:hidden">
         {emptyMessage ? (
