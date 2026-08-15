@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
 import { getContacts } from '../features/contacts/api/contacts';
 
 const ContactDetail = () => {
@@ -26,6 +26,14 @@ const ContactDetail = () => {
       <p>{position}</p>
       <p>{email}</p>
       <p>{phone}</p>
+      <div>
+        <Link
+          className="bg-surface-1 text-text border-border hover:bg-surface-2 focus-visible:outline-focus-ring rounded-md border px-4 py-2 text-sm outline-offset-2"
+          to={`./edit`}
+        >
+          Edit
+        </Link>
+      </div>
     </div>
   );
 };
