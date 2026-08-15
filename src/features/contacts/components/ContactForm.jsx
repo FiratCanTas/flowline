@@ -4,7 +4,7 @@ import Input from '../../../components/ui/Input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import contactSchema from '../schema';
 
-const ContactForm = ({ defaultValues, onSubmit }) => {
+const ContactForm = ({ defaultValues, onSubmit, disabled }) => {
   const {
     register,
     handleSubmit,
@@ -31,7 +31,9 @@ const ContactForm = ({ defaultValues, onSubmit }) => {
         error={errors?.position?.message}
         {...register('position')}
       />
-      <Button type="submit">Save</Button>
+      <Button type="submit" disabled={disabled}>
+        Save
+      </Button>
     </form>
   );
 };

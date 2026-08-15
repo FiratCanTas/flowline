@@ -104,3 +104,20 @@ export const getContacts = () => {
 
   return data;
 };
+
+export const addContact = (contact) => {
+  const generateId = crypto.randomUUID();
+  const data = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const result = true;
+      if (result) {
+        const newContact = { ...contact, id: generateId };
+        contacts.push(newContact);
+        resolve(newContact);
+      } else {
+        reject('Something went wrong!');
+      }
+    }, 300);
+  });
+  return data;
+};
