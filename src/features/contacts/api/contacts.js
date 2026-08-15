@@ -121,3 +121,17 @@ export const addContact = (contact) => {
   });
   return data;
 };
+
+export const updateContact = (id, newContact) => {
+  const data = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const result = true;
+      if (result) {
+        const location = contacts.findIndex((contact) => contact.id === id);
+        contacts[location] = { ...contacts[location], ...newContact };
+        resolve(contacts[location]);
+      } else reject('Something went wrong!');
+    }, 300);
+  });
+  return data;
+};

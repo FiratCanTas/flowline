@@ -1,14 +1,27 @@
-import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router';
-import { getContacts } from '../features/contacts/api/contacts';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate, useParams } from 'react-router';
+import { getContacts, updateContact } from '../features/contacts/api/contacts';
 import ContactForm from '../features/contacts/components/ContactForm';
 
 const ContactEdit = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { id: contactId } = useParams();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['contacts'],
     queryFn: getContacts,
+  });
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ['update contact'],
+    mutationFn: (data) => {
+      return updateContact(contactId, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['contacts'] });
+      navigate(`/contacts/${contactId}`);
+    },
   });
 
   if (isLoading) return <p>Loading...</p>;
@@ -20,10 +33,7 @@ const ContactEdit = () => {
 
   return (
     <div>
-      <ContactForm
-        defaultValues={contact}
-        onSubmit={(data) => console.log('updating contact:', data)}
-      />
+      <ContactForm defaultValues={contact} onSubmit={(data) => mutate(data)} disabled={isPending} />
     </div>
   );
 };
