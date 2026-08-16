@@ -91,7 +91,7 @@ export const contacts = [
   },
 ];
 export const getContacts = () => {
-  const data = new Promise((resolve, reject) => {
+  const contact = new Promise((resolve, reject) => {
     setTimeout(() => {
       const result = true;
       if (result) {
@@ -102,12 +102,12 @@ export const getContacts = () => {
     }, 300);
   });
 
-  return data;
+  return contact;
 };
 
 export const addContact = (contact) => {
   const generateId = crypto.randomUUID();
-  const data = new Promise((resolve, reject) => {
+  const generatedContact = new Promise((resolve, reject) => {
     setTimeout(() => {
       const result = true;
       if (result) {
@@ -119,11 +119,11 @@ export const addContact = (contact) => {
       }
     }, 300);
   });
-  return data;
+  return generatedContact;
 };
 
 export const updateContact = (id, newContact) => {
-  const data = new Promise((resolve, reject) => {
+  const updatedContact = new Promise((resolve, reject) => {
     setTimeout(() => {
       const result = true;
       if (result) {
@@ -133,5 +133,23 @@ export const updateContact = (id, newContact) => {
       } else reject('Something went wrong!');
     }, 300);
   });
-  return data;
+  return updatedContact;
+};
+
+export const deleteContact = (id) => {
+  const deletedContact = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const result = true;
+      if (result) {
+        const contactIndex = contacts.findIndex((contact) => contact.id === id);
+        const contact = contacts[contactIndex];
+        contacts.splice(contactIndex, 1);
+        resolve(contact);
+      } else {
+        reject('Something went wrong!');
+      }
+    }, 300);
+  });
+
+  return deletedContact;
 };
