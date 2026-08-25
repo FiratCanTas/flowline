@@ -91,7 +91,7 @@ export const contacts = [
   },
 ];
 export const getContacts = () => {
-  const contact = new Promise((resolve, reject) => {
+  const contactList = new Promise((resolve, reject) => {
     setTimeout(() => {
       const result = true;
       if (result) {
@@ -102,7 +102,7 @@ export const getContacts = () => {
     }, 300);
   });
 
-  return contact;
+  return contactList;
 };
 
 export const addContact = (contact) => {
@@ -122,14 +122,14 @@ export const addContact = (contact) => {
   return generatedContact;
 };
 
-export const updateContact = (id, newContact) => {
+export const updateContact = (id, newContactData) => {
   const updatedContact = new Promise((resolve, reject) => {
     setTimeout(() => {
       const result = true;
       if (result) {
-        const location = contacts.findIndex((contact) => contact.id === id);
-        contacts[location] = { ...contacts[location], ...newContact };
-        resolve(contacts[location]);
+        const contactIndex = contacts.findIndex((contact) => contact.id === id);
+        contacts[contactIndex] = { ...contacts[contactIndex], ...newContactData };
+        resolve(contacts[contactIndex]);
       } else reject('Something went wrong!');
     }, 300);
   });
@@ -142,9 +142,9 @@ export const deleteContact = (id) => {
       const result = true;
       if (result) {
         const contactIndex = contacts.findIndex((contact) => contact.id === id);
-        const contact = contacts[contactIndex];
+        const deletedContact = contacts[contactIndex];
         contacts.splice(contactIndex, 1);
-        resolve(contact);
+        resolve(deletedContact);
       } else {
         reject('Something went wrong!');
       }
