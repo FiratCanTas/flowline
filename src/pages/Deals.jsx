@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { getDeals } from '../features/deals/api/deals';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { getDeals, updateDeal } from '../features/deals/api/deals';
 import { getContacts } from '../features/contacts/api/contacts';
 import { Link } from 'react-router';
 
 const Deals = () => {
+  const queryClient = useQueryClient();
   const {
     data: deals,
     isLoading: isDealsLoading,
@@ -20,6 +21,24 @@ const Deals = () => {
     queryKey: ['contacts'],
     queryFn: getContacts,
   });
+
+  const { isLoading, mutate } = useMutation({
+    mutationKey: ['update deal'],
+    mutationFn: (data) => {
+      const { id, updatedDeal } = data;
+      return updateDeal(id, updatedDeal);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['deals'] });
+    },
+  });
+
+  const handleSelect = (event, id) => {
+    const { value, name } = event.target;
+    const deal = deals.find((deal) => deal.id === id);
+    const updatedDeal = { ...deal, [name]: value };
+    mutate({ id, updatedDeal });
+  };
 
   if (isDealsLoading || isContactsLoading) {
     return <span>Loading...</span>;
@@ -51,21 +70,37 @@ const Deals = () => {
               {dealCategory} ({categorisedDeals[`${dealCategory}`].length})
             </h3>
 
-            <div className="">
-              {categorisedDeals[`${dealCategory}`].length ? (
-                categorisedDeals[`${dealCategory}`].map(({ id, title, value, contactId }) => (
-                  <Link key={id} to={`./${id}`}>
-                    <div className="border-border my-2 rounded-md border p-1">
-                      <p className="line-clamp-1 font-semibold">{title}</p>
-                      <p>${value.toLocaleString()}</p>
-                      <p>{contacts?.find((contact) => contact.id === contactId)?.name}</p>
-                    </div>
+            {categorisedDeals[`${dealCategory}`].length ? (
+              categorisedDeals[`${dealCategory}`].map(({ id, title, value, contactId }) => (
+                <div key={id} className="border-border my-2 rounded-md border p-1">
+                  <div className="flex">
+                    <label htmlFor={id}>Stage:</label>
+                    <select
+                      id={id}
+                      name="stage"
+                      value={dealCategory}
+                      onChange={(event) => handleSelect(event, id)}
+                      className="w-full"
+                      disabled={isLoading}
+                    >
+                      {Object.keys(categorisedDeals)?.map((filteredCategory) => (
+                        <option key={filteredCategory} value={filteredCategory}>
+                          {filteredCategory}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <Link to={`./${id}`}>
+                    <p className="line-clamp-1 font-semibold">{title}</p>
+                    <p>${value.toLocaleString()}</p>
+                    <p>{contacts?.find((contact) => contact.id === contactId)?.name}</p>
                   </Link>
-                ))
-              ) : (
-                <div className="border-border border p-1">No deals</div>
-              )}
-            </div>
+                </div>
+              ))
+            ) : (
+              <div className="border-border border p-1">No deals</div>
+            )}
           </div>
         ))}
       </div>
