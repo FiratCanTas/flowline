@@ -8,21 +8,25 @@ const ContactDetail = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const { data, isLoading, error } = useQuery({
+  const {
+    data: contacts,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['contacts'],
     queryFn: getContacts,
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate: deleteContactMutation, isPending } = useMutation({
     mutationKey: ['delete contact'],
-    mutationFn: () => deleteContact(contactId),
+    mutationFn: (id) => deleteContact(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['contacts'] });
       navigate('/contacts');
     },
   });
 
-  const contact = data?.find((contact) => contact.id === contactId);
+  const contact = contacts?.find((contact) => contact.id === contactId);
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -35,7 +39,7 @@ const ContactDetail = () => {
   const handleDeleteContact = () => {
     const result = window.confirm('Do you want to delete the contact?');
     if (result) {
-      mutate();
+      deleteContactMutation(contactId);
     }
   };
   return (
