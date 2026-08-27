@@ -8,16 +8,18 @@ const ContactEdit = () => {
   const navigate = useNavigate();
   const { id: contactId } = useParams();
 
-  const { data, isLoading, error } = useQuery({
+  const {
+    data: contacts,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['contacts'],
     queryFn: getContacts,
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate: updateContactMutation, isPending } = useMutation({
     mutationKey: ['update contact'],
-    mutationFn: (data) => {
-      return updateContact(contactId, data);
-    },
+    mutationFn: (data) => updateContact(contactId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['contacts'] });
       navigate(`/contacts/${contactId}`);
@@ -27,13 +29,17 @@ const ContactEdit = () => {
   if (isLoading) return <p>Loading...</p>;
   else if (error) return <p>Someting went wrong... Error:{error.message}</p>;
 
-  const contact = data?.find((contact) => contact.id === contactId);
+  const contact = contacts?.find((contact) => contact.id === contactId);
 
   if (!contact) return <p>The contact is not found.</p>;
 
   return (
     <div>
-      <ContactForm defaultValues={contact} onSubmit={(data) => mutate(data)} disabled={isPending} />
+      <ContactForm
+        defaultValues={contact}
+        onSubmit={(formData) => updateContactMutation(formData)}
+        disabled={isPending}
+      />
     </div>
   );
 };
