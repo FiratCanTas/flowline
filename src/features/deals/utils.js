@@ -1,3 +1,5 @@
+import { differenceInDays } from 'date-fns';
+
 const STAGE_PROBABILITY = {
   lead: 0.1,
   qualified: 0.25,
@@ -5,6 +7,13 @@ const STAGE_PROBABILITY = {
   negotiation: 0.75,
   won: 1,
   lost: 0,
+};
+
+const STALE_THRESHOLD_DAYS = {
+  lead: 3,
+  qualified: 5,
+  proposal: 7,
+  negotiation: 5,
 };
 
 export const getWeightedValue = (deal) => {
@@ -24,4 +33,12 @@ export const getWeightedPipelineValue = (deals) => {
     }, 0);
 
   return pipelineValue;
+};
+
+export const isDealStale = (deal, today = new Date()) => {
+  const { stage, createdAt } = deal;
+  if (stage === 'won' || stage === 'lost') return false;
+  const dayDifference = differenceInDays(today, createdAt);
+  if (dayDifference >= STALE_THRESHOLD_DAYS[stage]) return true;
+  else return false;
 };
