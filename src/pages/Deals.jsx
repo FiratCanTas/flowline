@@ -46,14 +46,14 @@ const Deals = () => {
     return <span>{dealsError?.message || contactsError?.message}</span>;
   }
 
-  const categorisedDeals = {
-    negotiation: deals?.filter((deal) => deal.stage.toLowerCase() === 'negotiation'),
-    lead: deals?.filter((deal) => deal.stage.toLowerCase() === 'lead'),
-    won: deals?.filter((deal) => deal.stage.toLowerCase() === 'won'),
-    lost: deals?.filter((deal) => deal.stage.toLowerCase() === 'lost'),
-    qualified: deals?.filter((deal) => deal.stage.toLowerCase() === 'qualified'),
-    proposal: deals?.filter((deal) => deal.stage.toLowerCase() === 'proposal'),
-  };
+  const categorisedDeals = deals?.reduce(
+    (stageGroups, deal) => {
+      const stage = deal.stage.toLowerCase();
+      stageGroups[stage] = [...stageGroups[stage], deal];
+      return stageGroups;
+    },
+    { negotiation: [], lead: [], won: [], lost: [], qualified: [], proposal: [] },
+  );
 
   return (
     <div>
