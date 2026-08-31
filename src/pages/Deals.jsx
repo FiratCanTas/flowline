@@ -2,7 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getDeals, updateDeal } from '../features/deals/api/deals';
 import { getContacts } from '../features/contacts/api/contacts';
 import { Link } from 'react-router';
-import { getWeightedPipelineValue } from '../features/deals/utils';
+import { getWeightedPipelineValue, isDealStale } from '../features/deals/utils';
+import Badge from '../components/ui/Badge';
 
 const Deals = () => {
   const queryClient = useQueryClient();
@@ -76,33 +77,36 @@ const Deals = () => {
             </h3>
 
             {categorisedDeals[`${dealCategory}`].length ? (
-              categorisedDeals[`${dealCategory}`].map(({ id, title, value, contactId }) => (
-                <div key={id} className="border-border my-2 rounded-md border p-1">
-                  <div className="flex">
-                    <label htmlFor={id}>Stage:</label>
-                    <select
-                      id={id}
-                      name="stage"
-                      value={dealCategory}
-                      onChange={(event) => handleSelect(event, id)}
-                      className="w-full"
-                      disabled={isLoading}
-                    >
-                      {Object.keys(categorisedDeals)?.map((filteredCategory) => (
-                        <option key={filteredCategory} value={filteredCategory}>
-                          {filteredCategory}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+              categorisedDeals[`${dealCategory}`].map(
+                ({ id, title, stage, createdAt, value, contactId }) => (
+                  <div key={id} className="border-border my-2 rounded-md border p-1">
+                    <div className="flex">
+                      <label htmlFor={id}>Stage:</label>
+                      <select
+                        id={id}
+                        name="stage"
+                        value={dealCategory}
+                        onChange={(event) => handleSelect(event, id)}
+                        className="w-full"
+                        disabled={isLoading}
+                      >
+                        {Object.keys(categorisedDeals)?.map((filteredCategory) => (
+                          <option key={filteredCategory} value={filteredCategory}>
+                            {filteredCategory}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
 
-                  <Link to={`./${id}`}>
-                    <p className="line-clamp-1 font-semibold">{title}</p>
-                    <p>${value.toLocaleString()}</p>
-                    <p>{contacts?.find((contact) => contact.id === contactId)?.name}</p>
-                  </Link>
-                </div>
-              ))
+                    <Link to={`./${id}`}>
+                      {isDealStale({ stage, createdAt }) && <Badge variant="danger">Stale</Badge>}
+                      <p className="line-clamp-1 font-semibold">{title}</p>
+                      <p>${value.toLocaleString()}</p>
+                      <p>{contacts?.find((contact) => contact.id === contactId)?.name}</p>
+                    </Link>
+                  </div>
+                ),
+              )
             ) : (
               <div className="border-border border p-1">No deals</div>
             )}
