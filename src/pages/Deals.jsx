@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getDeals, updateDeal } from '../features/deals/api/deals';
 import { getContacts } from '../features/contacts/api/contacts';
 import { Link } from 'react-router';
+import { getWeightedPipelineValue } from '../features/deals/utils';
 
 const Deals = () => {
   const queryClient = useQueryClient();
@@ -57,12 +58,16 @@ const Deals = () => {
 
   return (
     <div>
-      <Link
-        className="bg-accent text-accent-foreground hover:bg-accent-hover focus-visible:outline-focus-ring rounded-md px-4 py-2 text-sm outline-offset-2"
-        to="./new"
-      >
-        Add New Deal
-      </Link>
+      <div className="flex justify-between">
+        <Link
+          className="bg-accent text-accent-foreground hover:bg-accent-hover focus-visible:outline-focus-ring rounded-md px-4 py-2 text-sm outline-offset-2"
+          to="./new"
+        >
+          Add New Deal
+        </Link>
+        <p>Weighted pipeline: ${getWeightedPipelineValue(deals).toLocaleString()}</p>
+      </div>
+
       <div className="flex flex-col gap-2 md:flex-row md:overflow-x-auto">
         {Object.keys(categorisedDeals)?.map((dealCategory) => (
           <div key={dealCategory} className="w-full flex-1 md:min-w-52">
