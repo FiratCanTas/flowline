@@ -6,7 +6,7 @@ export const activities = [
     type: 'note',
     title: 'Contract redlines requested by legal',
     dueDate: null,
-    isCompleted: true,
+    isCompleted: false,
     createdAt: '2026-08-10T09:00:00.000Z',
   },
   {
