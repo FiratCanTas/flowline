@@ -21,6 +21,21 @@ const CheckIcon = () => (
   </svg>
 );
 
+const PencilIcon = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="text-text-muted h-4 w-4"
+  >
+    <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+    <path d="m15 5 4 4" />
+  </svg>
+);
+
 const Activities = () => {
   const {
     data: activities,
@@ -83,19 +98,24 @@ const Activities = () => {
                 </p>
               </div>
             </div>
-            {isCompleted ? (
-              <CheckIcon />
-            ) : type === 'task' ? (
-              isTaskOverdue({ type, dueDate, isCompleted }) ? (
-                <Badge variant="danger" className="max-w-max flex-1 text-nowrap">
-                  Overdue
-                </Badge>
-              ) : (
-                <Badge className="max-w-max flex-1 text-nowrap">
-                  {format(new Date(dueDate), 'd MMMM')}
-                </Badge>
-              )
-            ) : null}
+            <div className="flex shrink-0 items-center gap-3">
+              {isCompleted ? (
+                <CheckIcon />
+              ) : type === 'task' ? (
+                isTaskOverdue({ type, dueDate, isCompleted }) ? (
+                  <Badge variant="danger" className="max-w-max flex-1 text-nowrap">
+                    Overdue
+                  </Badge>
+                ) : (
+                  <Badge className="max-w-max flex-1 text-nowrap">
+                    {format(new Date(dueDate), 'd MMMM')}
+                  </Badge>
+                )
+              ) : null}
+              <Link to={`./${id}/edit`}>
+                <PencilIcon />
+              </Link>
+            </div>
           </div>
         ))}
       </div>

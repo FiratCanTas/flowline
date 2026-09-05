@@ -12,6 +12,7 @@ import DealNew from './pages/DealNew';
 import DealEdit from './pages/DealEdit';
 import DealDetail from './pages/DealDetail';
 import ActivityNew from './pages/ActivityNew';
+import ActivityEdit from './pages/ActivityEdit';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/deals/new" element={<DealNew />} />
         <Route path="/activities" element={<Activities />} />
         <Route path="/activities/new" element={<ActivityNew />} />
+        <Route path="/activities/:id/edit" element={<ActivityEdit />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
