@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getDeals } from '../features/deals/api/deals';
 import { getContacts } from '../features/contacts/api/contacts';
-import { getActivities } from '../features/activities/api/activities';
+import { deleteActivity, getActivities } from '../features/activities/api/activities';
 import Badge from '../components/ui/Badge';
 import { format } from 'date-fns';
 import { isTaskOverdue } from '../features/activities/utils';
@@ -36,7 +36,26 @@ const PencilIcon = () => (
   </svg>
 );
 
+const TrashIcon = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="text-text-muted h-4 w-4"
+  >
+    <path d="M3 6h18" />
+    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+    <line x1="10" y1="11" x2="10" y2="17" />
+    <line x1="14" y1="11" x2="14" y2="17" />
+  </svg>
+);
+
 const Activities = () => {
+  const queryClient = useQueryClient();
+
   const {
     data: activities,
     isLoading: isActivitiesLoading,
@@ -63,6 +82,19 @@ const Activities = () => {
     queryKey: ['contacts'],
     queryFn: getContacts,
   });
+
+  const { mutate: deleteActivityMutation, isPending } = useMutation({
+    mutationKey: ['delete activity'],
+    mutationFn: (id) => deleteActivity(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['activities'] });
+    },
+  });
+
+  const handleDeleteActivity = (id) => {
+    const result = window.confirm('Do you want to delete the activity?');
+    if (result) deleteActivityMutation(id);
+  };
 
   if (isActivitiesLoading || isDealsLoading || isContactsLoading) return <p>Loading...</p>;
   else if (activitiesError || dealsError || contactsError)
@@ -115,6 +147,9 @@ const Activities = () => {
               <Link to={`./${id}/edit`}>
                 <PencilIcon />
               </Link>
+              <button onClick={() => handleDeleteActivity(id)} disabled={isPending}>
+                <TrashIcon />
+              </button>
             </div>
           </div>
         ))}
