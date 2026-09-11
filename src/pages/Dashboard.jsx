@@ -44,7 +44,7 @@ const Dashboard = () => {
   let atRiskDeals = [];
   if (deals.length) {
     deals.forEach((deal) => {
-      const isItStale = isDealStale(deal);
+      const isItStale = isDealStale(deal, activities);
       if (deal.stage !== 'won' && deal.stage !== 'lost') {
         totalOpenDeals++;
 
