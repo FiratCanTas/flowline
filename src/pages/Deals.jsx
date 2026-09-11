@@ -4,6 +4,7 @@ import { getContacts } from '../features/contacts/api/contacts';
 import { Link } from 'react-router';
 import { getWeightedPipelineValue, isDealStale } from '../features/deals/utils';
 import Badge from '../components/ui/Badge';
+import { getActivities } from '../features/activities/api/activities';
 
 const Deals = () => {
   const queryClient = useQueryClient();
@@ -24,6 +25,15 @@ const Deals = () => {
     queryFn: getContacts,
   });
 
+  const {
+    data: activities,
+    isLoading: isActivitiesLoading,
+    error: activitiesError,
+  } = useQuery({
+    queryKey: ['activities'],
+    queryFn: getActivities,
+  });
+
   const { isLoading, mutate } = useMutation({
     mutationKey: ['update deal'],
     mutationFn: (data) => {
@@ -42,10 +52,10 @@ const Deals = () => {
     mutate({ id, updatedDeal });
   };
 
-  if (isDealsLoading || isContactsLoading) {
+  if (isDealsLoading || isContactsLoading || isActivitiesLoading) {
     return <span>Loading...</span>;
-  } else if (dealsError || contactsError) {
-    return <span>{dealsError?.message || contactsError?.message}</span>;
+  } else if (dealsError || contactsError || activitiesError) {
+    return <span>{dealsError?.message || contactsError?.message || activitiesError?.name}</span>;
   }
 
   const categorisedDeals = deals?.reduce(
@@ -99,7 +109,9 @@ const Deals = () => {
                     </div>
 
                     <Link to={`./${id}`}>
-                      {isDealStale({ stage, createdAt }) && <Badge variant="danger">Stale</Badge>}
+                      {isDealStale({ stage, createdAt, id }, activities) && (
+                        <Badge variant="danger">Stale</Badge>
+                      )}
                       <p className="line-clamp-1 font-semibold">{title}</p>
                       <p>${value.toLocaleString()}</p>
                       <p>{contacts?.find((contact) => contact.id === contactId)?.name}</p>
