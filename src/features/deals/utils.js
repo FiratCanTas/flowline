@@ -35,10 +35,27 @@ export const getWeightedPipelineValue = (deals) => {
   return pipelineValue;
 };
 
-export const isDealStale = (deal, today = new Date()) => {
-  const { stage, createdAt } = deal;
+export const isDealStale = (deal, activities, today = new Date()) => {
+  const { stage, id } = deal;
   if (stage === 'won' || stage === 'lost') return false;
-  const dayDifference = differenceInDays(today, createdAt);
+  const lastActivity = activities
+    ?.filter((activity) => activity.dealId === id)
+    ?.sort((firstActivity, secondActivity) =>
+      firstActivity.createdAt.localeCompare(secondActivity.createdAt),
+    )
+    ?.pop();
+  const dayDifference = differenceInDays(today, lastActivity?.createdAt || deal.createdAt);
   if (dayDifference >= STALE_THRESHOLD_DAYS[stage]) return true;
   else return false;
+};
+
+export const isActionlessDeal = (deal, activities) => {
+  if (deal.stage === 'won' || deal.stage === 'lost') return false;
+  else if (!activities || !activities.length) return true;
+
+  const hasOpenTask = activities.some(
+    (activity) => activity.dealId === deal.id && activity.type === 'task' && !activity.isCompleted,
+  );
+
+  return !hasOpenTask;
 };
