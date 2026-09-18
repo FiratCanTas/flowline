@@ -16,20 +16,20 @@ export const addContact = async (contact) => {
     .single();
 
   if (error) throw new Error(error.message);
+
   return generatedContact;
 };
 
-export const updateContact = (id, newContactData) => {
-  const updatedContact = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const result = true;
-      if (result) {
-        const contactIndex = contacts.findIndex((contact) => contact.id === id);
-        contacts[contactIndex] = { ...contacts[contactIndex], ...newContactData };
-        resolve(contacts[contactIndex]);
-      } else reject('Something went wrong!');
-    }, 300);
-  });
+export const updateContact = async (id, newContactData) => {
+  const { data: updatedContact, error } = await supabase
+    .from('contacts')
+    .update(newContactData)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+
   return updatedContact;
 };
 
