@@ -8,20 +8,14 @@ export const getContacts = async () => {
   return contacts;
 };
 
-export const addContact = (contact) => {
-  const generateId = crypto.randomUUID();
-  const generatedContact = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const result = true;
-      if (result) {
-        const newContact = { ...contact, id: generateId };
-        contacts.push(newContact);
-        resolve(newContact);
-      } else {
-        reject('Something went wrong!');
-      }
-    }, 300);
-  });
+export const addContact = async (contact) => {
+  const { data: generatedContact, error } = await supabase
+    .from('contacts')
+    .insert(contact)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
   return generatedContact;
 };
 
