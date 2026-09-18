@@ -1,6 +1,24 @@
 import { Outlet } from 'react-router';
 import NavItem from './NavItem';
 import { useEffect, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { signOut } from '../../features/auth/api/auth';
+
+const LogOutIcon = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="h-5 w-5"
+  >
+    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+    <polyline points="16 17 21 12 16 7" />
+    <line x1="21" y1="12" x2="9" y2="12" />
+  </svg>
+);
 
 const SunIcon = () => (
   <svg
@@ -30,6 +48,7 @@ const MoonIcon = () => (
 );
 
 const AppShell = () => {
+  const queryClient = useQueryClient();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') === 'dark');
 
@@ -43,6 +62,17 @@ const AppShell = () => {
       html.classList.remove('dark');
     }
   }, [isDark]);
+
+  const { mutate: signOutMutation, isPending } = useMutation({
+    mutationKey: ['logout'],
+    mutationFn: signOut,
+    onSuccess: () => {
+      queryClient.clear();
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
 
   return (
     <div className="flex h-screen">
@@ -84,6 +114,15 @@ const AppShell = () => {
             onClick={() => setIsDark((prev) => !prev)}
           >
             {isDark ? <SunIcon /> : <MoonIcon />}
+          </button>
+          <button
+            aria-label="Sign out"
+            type="button"
+            className="hover:bg-surface-2 focus-visible:outline-focus-ring rounded-md p-2 outline-offset-2"
+            onClick={() => signOutMutation()}
+            disabled={isPending}
+          >
+            <LogOutIcon />
           </button>
         </header>
 
