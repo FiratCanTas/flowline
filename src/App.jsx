@@ -13,23 +13,28 @@ import DealEdit from './pages/DealEdit';
 import DealDetail from './pages/DealDetail';
 import ActivityNew from './pages/ActivityNew';
 import ActivityEdit from './pages/ActivityEdit';
+import Login from './pages/Login';
+import ProtectedRoute from './routes/ProtectedRoute';
 
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<AppShell />}>
-        <Route index element={<Dashboard />} />
-        <Route path="/contacts" element={<Contacts />} />
-        <Route path="/contacts/:id" element={<ContactDetail />} />
-        <Route path="/contacts/:id/edit" element={<ContactEdit />} />
-        <Route path="/contacts/new" element={<ContactNew />} />
-        <Route path="/deals" element={<Deals />} />
-        <Route path="/deals/:id" element={<DealDetail />} />
-        <Route path="/deals/:id/edit" element={<DealEdit />} />
-        <Route path="/deals/new" element={<DealNew />} />
-        <Route path="/activities" element={<Activities />} />
-        <Route path="/activities/new" element={<ActivityNew />} />
-        <Route path="/activities/:id/edit" element={<ActivityEdit />} />
+      <Route path="/login" element={<Login />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<AppShell />}>
+          <Route index element={<Dashboard />} />
+          <Route path="/contacts" element={<Contacts />} />
+          <Route path="/contacts/:id" element={<ContactDetail />} />
+          <Route path="/contacts/:id/edit" element={<ContactEdit />} />
+          <Route path="/contacts/new" element={<ContactNew />} />
+          <Route path="/deals" element={<Deals />} />
+          <Route path="/deals/:id" element={<DealDetail />} />
+          <Route path="/deals/:id/edit" element={<DealEdit />} />
+          <Route path="/deals/new" element={<DealNew />} />
+          <Route path="/activities" element={<Activities />} />
+          <Route path="/activities/new" element={<ActivityNew />} />
+          <Route path="/activities/:id/edit" element={<ActivityEdit />} />
+        </Route>
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
