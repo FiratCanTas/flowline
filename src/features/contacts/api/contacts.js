@@ -33,20 +33,15 @@ export const updateContact = async (id, newContactData) => {
   return updatedContact;
 };
 
-export const deleteContact = (id) => {
-  const deletedContact = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const result = true;
-      if (result) {
-        const contactIndex = contacts.findIndex((contact) => contact.id === id);
-        const deletedContact = contacts[contactIndex];
-        contacts.splice(contactIndex, 1);
-        resolve(deletedContact);
-      } else {
-        reject('Something went wrong!');
-      }
-    }, 300);
-  });
+export const deleteContact = async (id) => {
+  const { data: deletedContact, error } = await supabase
+    .from('contacts')
+    .delete()
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
 
   return deletedContact;
 };
