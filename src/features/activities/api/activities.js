@@ -55,19 +55,20 @@ export const addActivity = async (activity) => {
   return addedActivity;
 };
 
-export const updateActivity = (id, newActivityData) => {
-  const updatedActivity = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const result = true;
-      if (result) {
-        const activityIndex = activities.findIndex((activity) => activity.id === id);
-        activities[activityIndex] = { ...activities[activityIndex], ...newActivityData };
-        resolve(activities[activityIndex]);
-      } else {
-        reject('Something went wrong!');
-      }
-    }, 300);
-  });
+export const updateActivity = async (id, newActivityData) => {
+  const convertedActivity = convertToDatabaseForm(newActivityData);
+
+  const { data, error } = await supabase
+    .from('activities')
+    .update(convertedActivity)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  const updatedActivity = convertToActivity(data);
+
   return updatedActivity;
 };
 
