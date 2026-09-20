@@ -39,20 +39,19 @@ export const getActivities = async () => {
   return activities;
 };
 
-export const addActivity = (activity) => {
-  const activityId = crypto.randomUUID();
-  const addedActivity = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const result = true;
-      if (result) {
-        const newActivity = { ...activity, id: activityId };
-        activities.push(newActivity);
-        resolve(newActivity);
-      } else {
-        reject('Something went wrong!');
-      }
-    }, 300);
-  });
+export const addActivity = async (activity) => {
+  const convertedActivity = convertToDatabaseForm(activity);
+
+  const { data, error } = await supabase
+    .from('activities')
+    .insert(convertedActivity)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  const addedActivity = convertToActivity(data);
+
   return addedActivity;
 };
 
