@@ -72,19 +72,12 @@ export const updateActivity = async (id, newActivityData) => {
   return updatedActivity;
 };
 
-export const deleteActivity = (id) => {
-  const deletedActivity = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const result = true;
-      if (result) {
-        const activityIndex = activities.findIndex((activity) => activity.id === id);
-        const removedActivity = activities[activityIndex];
-        activities.splice(activityIndex, 1);
-        resolve(removedActivity);
-      } else {
-        reject('Something went wrong!');
-      }
-    }, 300);
-  });
+export const deleteActivity = async (id) => {
+  const { data, error } = await supabase.from('activities').delete().eq('id', id).select().single();
+
+  if (error) throw new Error(error.message);
+
+  const deletedActivity = convertToActivity(data);
+
   return deletedActivity;
 };
