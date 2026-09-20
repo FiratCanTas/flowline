@@ -64,19 +64,12 @@ export const updateDeal = async (id, newDealData) => {
   return updatedDeal;
 };
 
-export const deleteDeal = (id) => {
-  const deletedDeal = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const result = true;
-      if (result) {
-        const dealIndex = deals.findIndex((deal) => deal.id === id);
-        const deletedDeal = deals[dealIndex];
-        deals.splice(dealIndex, 1);
-        resolve(deletedDeal);
-      } else {
-        reject('Something went wrong!');
-      }
-    }, 300);
-  });
+export const deleteDeal = async (id) => {
+  const { data, error } = await supabase.from('deals').delete().eq('id', id).select().single();
+
+  if (error) throw new Error(error.message);
+
+  const deletedDeal = convertToDeal(data);
+
   return deletedDeal;
 };
