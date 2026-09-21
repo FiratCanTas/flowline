@@ -75,7 +75,7 @@ const AppShell = () => {
   });
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-dvh">
       {isSidebarOpen && (
         <div
           onClick={() => setIsSidebarOpen(false)}
