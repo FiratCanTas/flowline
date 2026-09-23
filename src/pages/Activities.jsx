@@ -115,44 +115,47 @@ const Activities = () => {
         Add new activity
       </Link>
       <div className="flex flex-col gap-2">
-        {activities?.map(({ id, isCompleted, type, title, dealId, contactId, dueDate }) => (
-          <div
-            key={id}
-            className={`border-border flex items-start justify-between rounded-xl border px-3 py-4 md:items-center ${isCompleted && 'opacity-50'}`}
-          >
-            <div className="flex min-w-0 flex-1 flex-col items-start gap-1 md:flex-row md:items-center md:gap-3">
-              <Badge className="first-letter:uppercase">{type}</Badge>
-              <div className="w-full min-w-0 md:flex-1">
-                <p className={`font-semibold ${isCompleted && 'line-through'}`}>{title}</p>
-                <p className="text-text-muted truncate">
-                  <span>{deals?.find((deal) => deal.id === dealId)?.title}</span> ·{' '}
-                  <span>{contacts?.find((contact) => contact.id === contactId)?.name}</span>
-                </p>
+        {activities?.map(
+          ({ id, createdAt, isCompleted, type, title, dealId, contactId, dueDate }) => (
+            <div
+              key={id}
+              className={`border-border flex items-start justify-between rounded-xl border px-3 py-4 md:items-center ${isCompleted && 'opacity-50'}`}
+            >
+              <div className="flex min-w-0 flex-1 flex-col items-start gap-1 md:flex-row md:items-center md:gap-3">
+                <Badge className="first-letter:uppercase">{type}</Badge>
+                <div className="w-full min-w-0 md:flex-1">
+                  <p className={`font-semibold ${isCompleted && 'line-through'}`}>{title}</p>
+                  <p className="text-text-muted truncate">
+                    <span>{deals?.find((deal) => deal.id === dealId)?.title}</span> ·{' '}
+                    <span>{contacts?.find((contact) => contact.id === contactId)?.name}</span> ·{' '}
+                    <span>{format(new Date(createdAt), 'd MMMM')}</span>
+                  </p>
+                </div>
+              </div>
+              <div className="flex shrink-0 items-center gap-3">
+                {isCompleted ? (
+                  <CheckIcon />
+                ) : type === 'task' ? (
+                  isTaskOverdue({ type, dueDate, isCompleted }) ? (
+                    <Badge variant="danger" className="max-w-max flex-1 text-nowrap">
+                      Overdue
+                    </Badge>
+                  ) : (
+                    <Badge className="max-w-max flex-1 text-nowrap">
+                      {format(new Date(dueDate), 'd MMMM')}
+                    </Badge>
+                  )
+                ) : null}
+                <Link to={`./${id}/edit`}>
+                  <PencilIcon />
+                </Link>
+                <button onClick={() => handleDeleteActivity(id)} disabled={isPending}>
+                  <TrashIcon />
+                </button>
               </div>
             </div>
-            <div className="flex shrink-0 items-center gap-3">
-              {isCompleted ? (
-                <CheckIcon />
-              ) : type === 'task' ? (
-                isTaskOverdue({ type, dueDate, isCompleted }) ? (
-                  <Badge variant="danger" className="max-w-max flex-1 text-nowrap">
-                    Overdue
-                  </Badge>
-                ) : (
-                  <Badge className="max-w-max flex-1 text-nowrap">
-                    {format(new Date(dueDate), 'd MMMM')}
-                  </Badge>
-                )
-              ) : null}
-              <Link to={`./${id}/edit`}>
-                <PencilIcon />
-              </Link>
-              <button onClick={() => handleDeleteActivity(id)} disabled={isPending}>
-                <TrashIcon />
-              </button>
-            </div>
-          </div>
-        ))}
+          ),
+        )}
       </div>
     </div>
   );
