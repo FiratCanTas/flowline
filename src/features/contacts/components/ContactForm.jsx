@@ -3,6 +3,7 @@ import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import contactSchema from '../schema';
+import LinkButton from '../../../components/ui/LinkButton';
 
 const ContactForm = ({ defaultValues, onSubmit, disabled }) => {
   const {
@@ -31,9 +32,17 @@ const ContactForm = ({ defaultValues, onSubmit, disabled }) => {
         error={errors?.position?.message}
         {...register('position')}
       />
-      <Button type="submit" disabled={disabled}>
-        Save
-      </Button>
+      <div className="flex gap-2">
+        <LinkButton
+          variant="secondary"
+          to={`${defaultValues?.id ? `/contacts/${defaultValues.id}` : '/contacts'}`}
+        >
+          Cancel
+        </LinkButton>
+        <Button type="submit" disabled={disabled}>
+          Save
+        </Button>
+      </div>
     </form>
   );
 };
