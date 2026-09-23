@@ -36,13 +36,13 @@ const Dashboard = () => {
   const maxCount = Math.max(...distributedStages.map((distributedStage) => distributedStage.count));
 
   let overdueTasks = [];
-  if (activities.length) {
+  if (activities?.length) {
     overdueTasks = activities.filter((activity) => isTaskOverdue(activity));
   }
 
   let totalOpenDeals = 0;
   let atRiskDeals = [];
-  if (deals.length) {
+  if (deals?.length) {
     deals.forEach((deal) => {
       const isItStale = isDealStale(deal, activities);
       if (deal.stage !== 'won' && deal.stage !== 'lost') {
