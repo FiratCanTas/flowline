@@ -12,6 +12,7 @@ const ActivityForm = ({ defaultValues, onSubmit, disabled }) => {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(activitySchema),
@@ -19,6 +20,7 @@ const ActivityForm = ({ defaultValues, onSubmit, disabled }) => {
   });
 
   const watchType = watch('type');
+  const watchContactId = watch('contactId');
 
   const {
     data: contacts,
@@ -45,6 +47,8 @@ const ActivityForm = ({ defaultValues, onSubmit, disabled }) => {
     onSubmit(formData);
   };
 
+  const filteredDeals = deals?.filter((deal) => deal.contactId === watchContactId);
+
   return (
     <form onSubmit={handleSubmit(handleSave)}>
       <Input label="Title" id="title" error={errors?.title?.message} {...register('title')} />
@@ -54,7 +58,9 @@ const ActivityForm = ({ defaultValues, onSubmit, disabled }) => {
           id="contacts"
           className={`${errors?.contactId?.message ? 'border-danger' : 'border-border'} w-full`}
           disabled={isContactsLoading || contactsError}
-          {...register('contactId')}
+          {...register('contactId', {
+            onChange: () => setValue('dealId', ''),
+          })}
         >
           <option value="">
             {isContactsLoading
@@ -76,7 +82,7 @@ const ActivityForm = ({ defaultValues, onSubmit, disabled }) => {
         <select
           id="deals"
           className={`${errors?.dealId?.message ? 'border-danger' : 'border-border'} w-full`}
-          disabled={isDealsLoading || dealsError}
+          disabled={isDealsLoading || dealsError || !watchContactId}
           {...register('dealId')}
         >
           <option value="">
@@ -84,9 +90,13 @@ const ActivityForm = ({ defaultValues, onSubmit, disabled }) => {
               ? 'Loading...'
               : dealsError
                 ? dealsError?.message
-                : 'Please choose a deal'}
+                : !watchContactId
+                  ? 'Choose a contact first'
+                  : filteredDeals?.length
+                    ? 'Please choose a deal'
+                    : 'No deals for this contact'}
           </option>
-          {deals?.map((deal) => (
+          {filteredDeals?.map((deal) => (
             <option key={deal.id} value={deal.id}>
               {deal.title}
             </option>
