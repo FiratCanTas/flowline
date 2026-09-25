@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getContacts } from '../features/contacts/api/contacts';
 import { Link, useSearchParams } from 'react-router';
+import Button from '../components/ui/Button';
 
 const Contacts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -184,19 +185,28 @@ const Contacts = () => {
         </tbody>
       </table>
 
-      <div>
-        <button onClick={handlePagination} name="prev" type="button" disabled={currentPage === 1}>
+      <div className="flex items-center justify-center gap-2">
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={handlePagination}
+          name="prev"
+          type="button"
+          disabled={currentPage === 1}
+        >
           Prev
-        </button>
-        <span>{currentPage}</span>
-        <button
+        </Button>
+        <span className="text-text-muted text-sm">Page {currentPage}</span>
+        <Button
+          variant="secondary"
+          size="sm"
           onClick={handlePagination}
           name="next"
           type="button"
           disabled={currentPage === totalPageNumber || totalPageNumber === 0}
         >
           Next
-        </button>
+        </Button>
       </div>
     </div>
   );
