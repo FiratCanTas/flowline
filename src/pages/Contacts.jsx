@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getContacts } from '../features/contacts/api/contacts';
 import { Link, useSearchParams } from 'react-router';
 import Button from '../components/ui/Button';
+import LinkButton from '../components/ui/LinkButton';
 
 const Contacts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -93,7 +94,7 @@ const Contacts = () => {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex justify-between">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <input
             type="text"
@@ -116,12 +117,7 @@ const Contacts = () => {
           </select>
         </div>
 
-        <Link
-          className="bg-accent text-accent-foreground hover:bg-accent-hover focus-visible:outline-focus-ring rounded-md px-4 py-2 text-sm outline-offset-2"
-          to="./new"
-        >
-          Add New Contact
-        </Link>
+        <LinkButton to="./new">Add New Contact</LinkButton>
       </div>
 
       <div className="flex flex-col gap-3 md:hidden">

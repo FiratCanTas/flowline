@@ -6,6 +6,7 @@ import Badge from '../components/ui/Badge';
 import { format } from 'date-fns';
 import { isTaskOverdue } from '../features/activities/utils';
 import { Link } from 'react-router';
+import LinkButton from '../components/ui/LinkButton';
 
 const CheckIcon = () => (
   <svg
@@ -107,13 +108,10 @@ const Activities = () => {
   else if (!activities.length) return <p>No activity has found!</p>;
 
   return (
-    <div className="flex flex-col gap-2">
-      <Link
-        to="./new"
-        className="bg-accent text-accent-foreground hover:bg-accent-hover focus-visible:outline-focus-ring ms-auto block max-w-max rounded-md px-4 py-2 text-sm outline-offset-2"
-      >
-        Add new activity
-      </Link>
+    <div className="flex flex-col gap-6">
+      <LinkButton to="./new" className="ms-auto self-center">
+        Add New Activity
+      </LinkButton>
       <div className="flex flex-col gap-2">
         {activities?.map(
           ({ id, createdAt, isCompleted, type, title, dealId, contactId, dueDate }) => (
