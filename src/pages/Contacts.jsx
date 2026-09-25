@@ -91,17 +91,24 @@ const Contacts = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-6">
       <div className="flex justify-between">
-        <div>
+        <div className="flex items-center gap-2">
           <input
             type="text"
             name="search"
+            placeholder="Search by name or company"
             value={search}
             onChange={handleSearchAndSort}
-            className="border"
+            className="border-border rounded-md border px-3 py-2 text-sm"
           />
-          <select value={sort} onChange={handleSearchAndSort} name="sort" id="sort">
+          <select
+            className="border-border rounded-md border px-3 py-2 text-sm"
+            value={sort}
+            onChange={handleSearchAndSort}
+            name="sort"
+            id="sort"
+          >
             <option value="">Please choose an option</option>
             <option value="asc">ASC</option>
             <option value="desc">DESC</option>
