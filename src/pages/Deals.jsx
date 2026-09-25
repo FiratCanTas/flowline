@@ -64,7 +64,7 @@ const Deals = () => {
       stageGroups[stage] = [...stageGroups[stage], deal];
       return stageGroups;
     },
-    { negotiation: [], lead: [], won: [], lost: [], qualified: [], proposal: [] },
+    { lead: [], qualified: [], proposal: [], negotiation: [], won: [], lost: [] },
   );
 
   return (
