@@ -5,6 +5,7 @@ import Input from '../../../components/ui/Input';
 import Button from '../../../components/ui/Button';
 import { useQuery } from '@tanstack/react-query';
 import { getContacts } from '../../contacts/api/contacts';
+import LinkButton from '../../../components/ui/LinkButton';
 
 const DealForm = ({ defaultValues, onSubmit, disabled }) => {
   const {
@@ -61,9 +62,17 @@ const DealForm = ({ defaultValues, onSubmit, disabled }) => {
         </select>
         {errors?.stage?.message && <p>{errors.stage.message}</p>}
       </div>
-      <Button type="submit" disabled={disabled}>
-        Save
-      </Button>
+      <div className="flex gap-2">
+        <LinkButton
+          variant="secondary"
+          to={`${defaultValues?.id ? `/deals/${defaultValues.id}` : '/deals'}`}
+        >
+          Cancel
+        </LinkButton>
+        <Button type="submit" disabled={disabled}>
+          Save
+        </Button>
+      </div>
     </form>
   );
 };
