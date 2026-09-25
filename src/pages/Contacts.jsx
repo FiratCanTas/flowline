@@ -138,31 +138,39 @@ const Contacts = () => {
         )}
       </div>
 
-      <table className="hidden md:table">
+      <table className="hidden w-full md:table">
         <thead>
           <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Company</th>
-            <th scope="col">Position</th>
-            <th scope="col">Email</th>
+            <th className="text-text-muted px-3 py-2 text-left text-xs font-semibold" scope="col">
+              Name
+            </th>
+            <th className="text-text-muted px-3 py-2 text-left text-xs font-semibold" scope="col">
+              Company
+            </th>
+            <th className="text-text-muted px-3 py-2 text-left text-xs font-semibold" scope="col">
+              Position
+            </th>
+            <th className="text-text-muted px-3 py-2 text-left text-xs font-semibold" scope="col">
+              Email
+            </th>
           </tr>
         </thead>
         <tbody>
           {emptyMessage ? (
             <tr>
-              <td colSpan={4}>{emptyMessage}</td>
+              <td className="px-3 py-2 text-sm" colSpan={4}>
+                {emptyMessage}
+              </td>
             </tr>
           ) : (
             paginatedContacts?.map(({ id, name, company, position, email }) => (
-              <tr key={id}>
-                <td>
-                  <Link to={`./${id}`} className="hover:bg-surface-2 hover:text-text rounded-md">
-                    {name}
-                  </Link>
+              <tr key={id} className="hover:bg-surface-2 border-border border-t">
+                <td className="px-3 py-2 text-sm">
+                  <Link to={`./${id}`}>{name}</Link>
                 </td>
-                <td>{company}</td>
-                <td>{position}</td>
-                <td>{email}</td>
+                <td className="px-3 py-2 text-sm">{company}</td>
+                <td className="px-3 py-2 text-sm">{position}</td>
+                <td className="px-3 py-2 text-sm">{email}</td>
               </tr>
             ))
           )}
