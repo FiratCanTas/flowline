@@ -89,7 +89,7 @@ const Deals = () => {
             {categorisedDeals[`${dealCategory}`].length ? (
               categorisedDeals[`${dealCategory}`].map(
                 ({ id, title, stage, createdAt, value, contactId }) => (
-                  <div key={id} className="border-border my-2 rounded-md border p-1">
+                  <div key={id} className="border-border my-2 rounded-md border p-3">
                     <div className="flex">
                       <label htmlFor={id}>Stage:</label>
                       <select
@@ -108,11 +108,16 @@ const Deals = () => {
                       </select>
                     </div>
 
-                    <Link to={`./${id}`}>
-                      {isDealStale({ stage, createdAt, id }, activities) && (
-                        <Badge variant="danger">Stale</Badge>
-                      )}
-                      <p className="line-clamp-1 font-semibold">{title}</p>
+                    <Link className="block space-y-1" to={`./${id}`}>
+                      <div className="flex min-w-0 items-center gap-2">
+                        <p className="line-clamp-1 font-semibold">{title}</p>
+                        {isDealStale({ stage, createdAt, id }, activities) && (
+                          <Badge className="shrink-0" variant="danger">
+                            Stale
+                          </Badge>
+                        )}
+                      </div>
+
                       <p>${value.toLocaleString()}</p>
                       <p>{contacts?.find((contact) => contact.id === contactId)?.name}</p>
                     </Link>
@@ -120,7 +125,9 @@ const Deals = () => {
                 ),
               )
             ) : (
-              <div className="border-border border p-1">No deals</div>
+              <div className="border-border text-text-muted my-2 rounded-md border p-3 text-center text-sm">
+                No deals
+              </div>
             )}
           </div>
         ))}
