@@ -3,6 +3,7 @@ import NavItem from './NavItem';
 import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { signOut } from '../../features/auth/api/auth';
+import IconButton from '../ui/IconButton';
 
 const LogOutIcon = () => (
   <svg
@@ -96,34 +97,32 @@ const AppShell = () => {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="bg-surface-1 border-border flex h-14 items-center gap-3 border-b px-6">
-          <button
+          <IconButton
             aria-label="Open Menu"
             type="button"
-            className="hover:bg-surface-2 flex flex-col gap-1 rounded-md p-2 md:hidden"
+            className="flex flex-col gap-1 md:hidden"
             onClick={() => setIsSidebarOpen((prev) => !prev)}
           >
             <span className="bg-text block h-0.5 w-5 rounded-full" />
             <span className="bg-text block h-0.5 w-5 rounded-full" />
             <span className="bg-text block h-0.5 w-5 rounded-full" />
-          </button>
+          </IconButton>
           <p className="min-w-0 flex-1 truncate">Dashboard Overview and Analytics</p>
-          <button
+          <IconButton
             aria-label={`${isDark ? 'Switch to light mode' : 'Switch to dark mode'}`}
             type="button"
-            className="hover:bg-surface-2 focus-visible:outline-focus-ring rounded-md p-2 outline-offset-2"
             onClick={() => setIsDark((prev) => !prev)}
           >
             {isDark ? <SunIcon /> : <MoonIcon />}
-          </button>
-          <button
+          </IconButton>
+          <IconButton
             aria-label="Sign out"
             type="button"
-            className="hover:bg-surface-2 focus-visible:outline-focus-ring rounded-md p-2 outline-offset-2"
             onClick={() => signOutMutation()}
             disabled={isPending}
           >
             <LogOutIcon />
-          </button>
+          </IconButton>
         </header>
 
         <main className="flex-1 overflow-y-auto p-6">
