@@ -70,13 +70,13 @@ const Deals = () => {
   return (
     <div>
       <div className="flex justify-between">
+        <p>Weighted pipeline: ${getWeightedPipelineValue(deals).toLocaleString()}</p>
         <Link
           className="bg-accent text-accent-foreground hover:bg-accent-hover focus-visible:outline-focus-ring rounded-md px-4 py-2 text-sm outline-offset-2"
           to="./new"
         >
           Add New Deal
         </Link>
-        <p>Weighted pipeline: ${getWeightedPipelineValue(deals).toLocaleString()}</p>
       </div>
 
       <div className="flex flex-col gap-2 md:flex-row md:overflow-x-auto">
