@@ -19,9 +19,11 @@ const Login = () => {
   });
   return (
     <div className="bg-bg flex min-h-screen items-center justify-center px-4">
-      <div className="bg-surface-1 border-border w-full max-w-sm rounded-xl border p-6 md:p-8">
-        <p className="text-lg font-semibold">Flowline</p>
-        <p className="text-text-muted text-sm">Sign in to your account</p>
+      <div className="bg-surface-1 border-border flex w-full max-w-sm flex-col gap-8 rounded-xl border p-6 md:p-8">
+        <div className="text-center">
+          <p className="text-lg font-semibold">Flowline</p>
+          <p className="text-text-muted text-sm">Sign in to your account</p>
+        </div>
         {error && <p className="text-danger text-sm">{error.message}</p>}
         <LoginForm onSubmit={(formData) => signInMutation(formData)} disabled={isPending} />
       </div>

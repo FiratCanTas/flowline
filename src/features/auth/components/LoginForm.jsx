@@ -13,7 +13,7 @@ const LoginForm = ({ onSubmit, disabled }) => {
     resolver: zodResolver(authSchema),
   });
   return (
-    <form onSubmit={handleSubmit((formData) => onSubmit(formData))}>
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit((formData) => onSubmit(formData))}>
       <Input
         label="Email"
         type="email"
@@ -30,7 +30,7 @@ const LoginForm = ({ onSubmit, disabled }) => {
         error={errors?.password?.message}
         {...register('password')}
       />
-      <Button disabled={disabled} type="submit">
+      <Button className="w-full" disabled={disabled} type="submit">
         Login
       </Button>
     </form>
