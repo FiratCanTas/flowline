@@ -6,6 +6,7 @@ import { getContacts } from '../../contacts/api/contacts';
 import { getDeals } from '../../deals/api/deals';
 import Input from '../../../components/ui/Input';
 import Button from '../../../components/ui/Button';
+import LinkButton from '../../../components/ui/LinkButton';
 
 const ActivityForm = ({ defaultValues, onSubmit, disabled }) => {
   const {
@@ -132,9 +133,14 @@ const ActivityForm = ({ defaultValues, onSubmit, disabled }) => {
         )}
       </div>
       <Input id="completed" type="checkbox" label="Completed" {...register('isCompleted')} />
-      <Button disabled={disabled} type="submit">
-        Save
-      </Button>
+      <div className="flex gap-2">
+        <LinkButton variant="secondary" to="/activities">
+          Cancel
+        </LinkButton>
+        <Button disabled={disabled} type="submit">
+          Save
+        </Button>
+      </div>
     </form>
   );
 };
