@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router';
+import { Outlet, useMatches } from 'react-router';
 import NavItem from './NavItem';
 import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -49,6 +49,7 @@ const MoonIcon = () => (
 );
 
 const AppShell = () => {
+  const matches = useMatches();
   const queryClient = useQueryClient();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') === 'dark');
@@ -107,7 +108,7 @@ const AppShell = () => {
             <span className="bg-text block h-0.5 w-5 rounded-full" />
             <span className="bg-text block h-0.5 w-5 rounded-full" />
           </IconButton>
-          <p className="min-w-0 flex-1 truncate">Dashboard Overview and Analytics</p>
+          <p className="min-w-0 flex-1 truncate">{matches[matches.length - 1]?.handle?.title}</p>
           <IconButton
             aria-label={`${isDark ? 'Switch to light mode' : 'Switch to dark mode'}`}
             type="button"
