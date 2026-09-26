@@ -7,6 +7,7 @@ import { getDeals } from '../../deals/api/deals';
 import Input from '../../../components/ui/Input';
 import Button from '../../../components/ui/Button';
 import LinkButton from '../../../components/ui/LinkButton';
+import Select from '../../../components/ui/Select';
 
 const ActivityForm = ({ defaultValues, onSubmit, disabled }) => {
   const {
@@ -51,60 +52,57 @@ const ActivityForm = ({ defaultValues, onSubmit, disabled }) => {
   const filteredDeals = deals?.filter((deal) => deal.contactId === watchContactId);
 
   return (
-    <form onSubmit={handleSubmit(handleSave)}>
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit(handleSave)}>
       <Input label="Title" id="title" error={errors?.title?.message} {...register('title')} />
-      <div className="flex">
-        <label htmlFor="contacts">Contact</label>
-        <select
-          id="contacts"
-          className={`${errors?.contactId?.message ? 'border-danger' : 'border-border'} w-full`}
-          disabled={isContactsLoading || contactsError}
-          {...register('contactId', {
-            onChange: () => setValue('dealId', ''),
-          })}
-        >
-          <option value="">
-            {isContactsLoading
-              ? 'Loading...'
-              : contactsError
-                ? contactsError?.message
-                : 'Please choose a contact'}
+
+      <Select
+        id="contacts"
+        label="Contact"
+        error={errors?.contactId?.message}
+        disabled={isContactsLoading || contactsError}
+        {...register('contactId', {
+          onChange: () => setValue('dealId', ''),
+        })}
+      >
+        <option value="">
+          {isContactsLoading
+            ? 'Loading...'
+            : contactsError
+              ? contactsError?.message
+              : 'Please choose a contact'}
+        </option>
+        {contacts?.map((contact) => (
+          <option key={contact.id} value={contact.id}>
+            {contact.name}
           </option>
-          {contacts?.map((contact) => (
-            <option key={contact.id} value={contact.id}>
-              {contact.name}
-            </option>
-          ))}
-        </select>
-        {errors?.contactId?.message && <p>{errors.contactId.message}</p>}
-      </div>
-      <div className="flex">
-        <label htmlFor="deals">Deal</label>
-        <select
-          id="deals"
-          className={`${errors?.dealId?.message ? 'border-danger' : 'border-border'} w-full`}
-          disabled={isDealsLoading || dealsError || !watchContactId}
-          {...register('dealId')}
-        >
-          <option value="">
-            {isDealsLoading
-              ? 'Loading...'
-              : dealsError
-                ? dealsError?.message
-                : !watchContactId
-                  ? 'Choose a contact first'
-                  : filteredDeals?.length
-                    ? 'Please choose a deal'
-                    : 'No deals for this contact'}
+        ))}
+      </Select>
+
+      <Select
+        id="deals"
+        label="Deal"
+        error={errors?.dealId?.message}
+        disabled={isDealsLoading || dealsError || !watchContactId}
+        {...register('dealId')}
+      >
+        <option value="">
+          {isDealsLoading
+            ? 'Loading...'
+            : dealsError
+              ? dealsError?.message
+              : !watchContactId
+                ? 'Choose a contact first'
+                : filteredDeals?.length
+                  ? 'Please choose a deal'
+                  : 'No deals for this contact'}
+        </option>
+        {filteredDeals?.map((deal) => (
+          <option key={deal.id} value={deal.id}>
+            {deal.title}
           </option>
-          {filteredDeals?.map((deal) => (
-            <option key={deal.id} value={deal.id}>
-              {deal.title}
-            </option>
-          ))}
-        </select>
-        {errors?.dealId?.message && <p>{errors.dealId.message}</p>}
-      </div>
+        ))}
+      </Select>
+
       <div>
         <fieldset>
           <legend>Select an activity type:</legend>
