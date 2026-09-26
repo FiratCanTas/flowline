@@ -1,12 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteDeal, getDeals } from '../features/deals/api/deals';
-import { Link, useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import Button from '../components/ui/Button';
 import { getContacts } from '../features/contacts/api/contacts';
 import { getActivities } from '../features/activities/api/activities';
 import Badge from '../components/ui/Badge';
 import { isTaskOverdue } from '../features/activities/utils';
 import { format } from 'date-fns';
+import LinkButton from '../components/ui/LinkButton';
 
 const DealDetail = () => {
   const { id: dealId } = useParams();
@@ -89,12 +90,9 @@ const DealDetail = () => {
         </div>
 
         <div className="flex gap-2">
-          <Link
-            className="bg-surface-1 text-text border-border hover:bg-surface-2 focus-visible:outline-focus-ring rounded-md border px-4 py-2 text-sm outline-offset-2"
-            to={`./edit`}
-          >
+          <LinkButton to="./edit" variant="secondary">
             Edit
-          </Link>
+          </LinkButton>
           <Button variant="danger" disabled={isPending} onClick={handleDeleteDeal}>
             Delete
           </Button>

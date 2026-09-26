@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Link, useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { deleteContact, getContacts } from '../features/contacts/api/contacts';
 import Button from '../components/ui/Button';
+import LinkButton from '../components/ui/LinkButton';
 
 const ContactDetail = () => {
   const { id: contactId } = useParams();
@@ -62,12 +63,9 @@ const ContactDetail = () => {
       </div>
 
       <div className="flex gap-2">
-        <Link
-          className="bg-surface-1 text-text border-border hover:bg-surface-2 focus-visible:outline-focus-ring rounded-md border px-4 py-2 text-sm outline-offset-2"
-          to={`./edit`}
-        >
+        <LinkButton to="./edit" variant="secondary">
           Edit
-        </Link>
+        </LinkButton>
 
         <Button variant="danger" disabled={isPending} onClick={handleDeleteContact}>
           Delete
