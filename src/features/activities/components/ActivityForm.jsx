@@ -103,21 +103,25 @@ const ActivityForm = ({ defaultValues, onSubmit, disabled }) => {
         ))}
       </Select>
 
-      <div>
+      <div className="flex flex-col gap-1">
         <fieldset>
-          <legend>Select an activity type:</legend>
-          <div className="flex gap-2">
-            <div>
+          <legend className="mb-1 text-sm font-medium">Activity type</legend>
+          <div className="flex gap-6">
+            <div className="flex items-center gap-2">
+              <label className="text-sm" htmlFor="task">
+                Task
+              </label>
               <input type="radio" id="task" value="task" {...register('type')} />
-              <label htmlFor="task">Task</label>
             </div>
-            <div>
+            <div className="flex items-center gap-2">
+              <label className="text-sm" htmlFor="note">
+                Note
+              </label>
               <input type="radio" id="note" value="note" {...register('type')} />
-              <label htmlFor="note">Note</label>
             </div>
           </div>
         </fieldset>
-        {errors?.type?.message && <p>{errors.type.message}</p>}
+        {errors?.type?.message && <p className="text-danger text-xs">{errors.type.message}</p>}
       </div>
       <div>
         {watchType === 'task' && (
@@ -130,7 +134,19 @@ const ActivityForm = ({ defaultValues, onSubmit, disabled }) => {
           />
         )}
       </div>
-      <Input id="completed" type="checkbox" label="Completed" {...register('isCompleted')} />
+
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center gap-4">
+          <label htmlFor="completed" className="text-sm font-medium">
+            Completed
+          </label>
+          <input id="completed" type="checkbox" {...register('isCompleted')} />
+        </div>
+        {errors?.isCompleted?.message && (
+          <p className="text-danger text-xs">{errors.isCompleted.message}</p>
+        )}
+      </div>
+
       <div className="flex gap-2">
         <LinkButton variant="secondary" to="/activities">
           Cancel
