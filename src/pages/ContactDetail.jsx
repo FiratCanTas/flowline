@@ -43,12 +43,24 @@ const ContactDetail = () => {
     }
   };
   return (
-    <div>
-      <p>{name}</p>
-      <p>{company}</p>
-      <p>{position}</p>
-      <p>{email}</p>
-      <p>{phone}</p>
+    <div className="bg-surface-1 border-border flex flex-col gap-5 rounded-xl border p-6">
+      <div className="flex flex-col gap-3">
+        <div>
+          <p className="text-xl font-semibold">{name}</p>
+          <p className="text-text-muted text-sm">
+            <span>{company}</span> · <span>{position}</span>
+          </p>
+        </div>
+        <div className="border-border flex flex-col gap-0.5 border-t pt-5">
+          <p className="text-text-muted text-xs font-medium uppercase">email</p>
+          <p className="text-sm">{email}</p>
+        </div>
+        <div className="flex flex-col gap-0.5">
+          <p className="text-text-muted text-xs font-medium uppercase">phone</p>
+          <p className="text-sm">{phone}</p>
+        </div>
+      </div>
+
       <div className="flex gap-2">
         <Link
           className="bg-surface-1 text-text border-border hover:bg-surface-2 focus-visible:outline-focus-ring rounded-md border px-4 py-2 text-sm outline-offset-2"
@@ -56,6 +68,7 @@ const ContactDetail = () => {
         >
           Edit
         </Link>
+
         <Button variant="danger" disabled={isPending} onClick={handleDeleteContact}>
           Delete
         </Button>
