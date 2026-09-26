@@ -72,11 +72,22 @@ const DealDetail = () => {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-0.5">
-        <p>{title}</p>
-        <p>{contact?.name}</p>
-        <p>${value.toLocaleString()}</p>
-        <p>{stage}</p>
+      <div className="bg-surface-1 border-border flex flex-col gap-5 rounded-xl border p-6">
+        <div className="flex flex-col gap-3">
+          <div>
+            <p className="text-xl font-semibold">{title}</p>
+            <p className="text-text-muted text-sm">{contact?.name}</p>
+          </div>
+          <div className="border-border flex flex-col gap-0.5 border-t pt-5">
+            <p className="text-text-muted text-xs font-medium uppercase">value</p>
+            <p className="text-sm">${value.toLocaleString()}</p>
+          </div>
+          <div className="flex flex-col gap-0.5">
+            <p className="text-text-muted text-xs font-medium uppercase">stage</p>
+            <p className="text-sm first-letter:uppercase">{stage}</p>
+          </div>
+        </div>
+
         <div className="flex gap-2">
           <Link
             className="bg-surface-1 text-text border-border hover:bg-surface-2 focus-visible:outline-focus-ring rounded-md border px-4 py-2 text-sm outline-offset-2"
