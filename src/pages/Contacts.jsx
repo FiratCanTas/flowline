@@ -3,6 +3,7 @@ import { getContacts } from '../features/contacts/api/contacts';
 import { Link, useSearchParams } from 'react-router';
 import Button from '../components/ui/Button';
 import LinkButton from '../components/ui/LinkButton';
+import Loading from '../components/ui/Loading';
 
 const Contacts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -87,7 +88,7 @@ const Contacts = () => {
     emptyMessage = `No results found matching "${search}"`;
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <Loading className="h-full" />;
   } else if (error) {
     return <span>{error.message}</span>;
   }

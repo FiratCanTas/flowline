@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 import { isTaskOverdue } from '../features/activities/utils';
 import { Link } from 'react-router';
 import LinkButton from '../components/ui/LinkButton';
+import Loading from '../components/ui/Loading';
 
 const CheckIcon = () => (
   <svg
@@ -97,7 +98,8 @@ const Activities = () => {
     if (result) deleteActivityMutation(id);
   };
 
-  if (isActivitiesLoading || isDealsLoading || isContactsLoading) return <p>Loading...</p>;
+  if (isActivitiesLoading || isDealsLoading || isContactsLoading)
+    return <Loading className="h-full" />;
   else if (activitiesError || dealsError || contactsError)
     return (
       <p>

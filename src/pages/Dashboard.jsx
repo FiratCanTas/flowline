@@ -5,6 +5,7 @@ import { getWeightedPipelineValue, isDealStale } from '../features/deals/utils';
 import { isTaskOverdue } from '../features/activities/utils';
 import Badge from '../components/ui/Badge';
 import { getActivities } from '../features/activities/api/activities';
+import Loading from '../components/ui/Loading';
 
 const Dashboard = () => {
   const {
@@ -25,7 +26,7 @@ const Dashboard = () => {
     queryFn: getActivities,
   });
 
-  if (isDealsLoading || isActivitiesLoading) return <p>Loading...</p>;
+  if (isDealsLoading || isActivitiesLoading) return <Loading className="h-full" />;
   else if (dealsError || activitiesError)
     return <p>Something went wrong! Error: {dealsError.message || activitiesError.message}</p>;
 

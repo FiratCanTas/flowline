@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { signOut } from '../../features/auth/api/auth';
 import IconButton from '../ui/IconButton';
+import Loading from '../ui/Loading';
 
 const LogOutIcon = () => (
   <svg
@@ -75,6 +76,8 @@ const AppShell = () => {
       console.error(error);
     },
   });
+
+  if (isPending) return <Loading className="h-dvh" />;
 
   return (
     <div className="flex h-dvh">

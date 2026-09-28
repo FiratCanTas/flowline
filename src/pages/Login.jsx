@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import LoginForm from '../features/auth/components/LoginForm';
 import { signIn } from '../features/auth/api/auth';
 import { useNavigate } from 'react-router';
+import Loading from '../components/ui/Loading';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,6 +18,8 @@ const Login = () => {
       navigate('/');
     },
   });
+
+  if (isPending) return <Loading className="h-dvh" />;
   return (
     <div className="bg-bg flex min-h-screen items-center justify-center px-4">
       <div className="bg-surface-1 border-border flex w-full max-w-sm flex-col gap-8 rounded-xl border p-6 md:p-8">
