@@ -21,7 +21,7 @@ const ContactDetail = () => {
 
   const { mutate: deleteContactMutation, isPending } = useMutation({
     mutationKey: ['delete contact'],
-    mutationFn: (id) => deleteContact(id),
+    mutationFn: deleteContact,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['contacts'] });
       navigate('/contacts');

@@ -44,7 +44,7 @@ const DealDetail = () => {
 
   const { mutate: deleteDealMutation, isPending } = useMutation({
     mutationKey: ['delete deal'],
-    mutationFn: (id) => deleteDeal(id),
+    mutationFn: deleteDeal,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['deals'] });
       navigate('/deals');

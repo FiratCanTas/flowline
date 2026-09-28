@@ -87,7 +87,7 @@ const Activities = () => {
 
   const { mutate: deleteActivityMutation, isPending } = useMutation({
     mutationKey: ['delete activity'],
-    mutationFn: (id) => deleteActivity(id),
+    mutationFn: deleteActivity,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['activities'] });
     },
