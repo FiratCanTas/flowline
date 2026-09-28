@@ -150,12 +150,12 @@ const Activities = () => {
                 <Link
                   className="hover:bg-surface-2 focus-visible:outline-focus-ring rounded-md p-2 outline-offset-2"
                   to={`./${id}/edit`}
-                  aria-label="Edit"
+                  aria-label={`Edit ${title}`}
                 >
                   <PencilIcon />
                 </Link>
                 <IconButton
-                  aria-label="Delete"
+                  aria-label={`Delete ${title}`}
                   onClick={() => handleDeleteActivity(id)}
                   disabled={isPending}
                 >

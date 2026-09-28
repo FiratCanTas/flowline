@@ -92,6 +92,7 @@ const Deals = () => {
                       <select
                         id={id}
                         name="stage"
+                        aria-label={`Stage for ${title}`}
                         value={dealCategory}
                         onChange={(event) => handleSelect(event, id)}
                         className="w-full"
