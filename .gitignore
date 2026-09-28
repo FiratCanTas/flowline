@@ -9,6 +9,9 @@ lerna-debug.log*
 
 node_modules
 .env
+AGENTS.md
+PROGRESS.md
+ROADMAP.txt
 dist
 dist-ssr
 *.local
