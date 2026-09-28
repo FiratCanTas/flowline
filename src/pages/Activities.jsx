@@ -8,6 +8,7 @@ import { isTaskOverdue } from '../features/activities/utils';
 import { Link } from 'react-router';
 import LinkButton from '../components/ui/LinkButton';
 import Loading from '../components/ui/Loading';
+import IconButton from '../components/ui/IconButton';
 
 const CheckIcon = () => (
   <svg
@@ -132,7 +133,7 @@ const Activities = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex shrink-0 items-center gap-3">
+              <div className="flex shrink-0 items-center gap-2">
                 {isCompleted ? (
                   <CheckIcon />
                 ) : type === 'task' ? (
@@ -146,12 +147,20 @@ const Activities = () => {
                     </Badge>
                   )
                 ) : null}
-                <Link to={`./${id}/edit`}>
+                <Link
+                  className="hover:bg-surface-2 focus-visible:outline-focus-ring rounded-md p-2 outline-offset-2"
+                  to={`./${id}/edit`}
+                  aria-label="Edit"
+                >
                   <PencilIcon />
                 </Link>
-                <button onClick={() => handleDeleteActivity(id)} disabled={isPending}>
+                <IconButton
+                  aria-label="Delete"
+                  onClick={() => handleDeleteActivity(id)}
+                  disabled={isPending}
+                >
                   <TrashIcon />
-                </button>
+                </IconButton>
               </div>
             </div>
           ),
