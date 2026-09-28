@@ -100,14 +100,16 @@ const Contacts = () => {
           <input
             type="text"
             name="search"
+            aria-label="Search contacts"
             placeholder="Search by name or company"
             value={search}
             onChange={handleSearchAndSort}
-            className="border-border rounded-md border px-3 py-2 text-sm"
+            className="border-border focus-visible:outline-focus-ring rounded-md border px-3 py-2 text-sm"
           />
           <select
-            className="border-border rounded-md border px-3 py-2 text-sm"
+            className="border-border focus-visible:outline-focus-ring rounded-md border px-3 py-2 text-sm"
             value={sort}
+            aria-label="Sort by name"
             onChange={handleSearchAndSort}
             name="sort"
             id="sort"
