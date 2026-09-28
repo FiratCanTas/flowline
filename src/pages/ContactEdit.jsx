@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router';
 import { getContacts, updateContact } from '../features/contacts/api/contacts';
 import ContactForm from '../features/contacts/components/ContactForm';
+import Loading from '../components/ui/Loading';
 
 const ContactEdit = () => {
   const queryClient = useQueryClient();
@@ -26,7 +27,7 @@ const ContactEdit = () => {
     },
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading className="h-full" />;
   else if (error) return <p>Someting went wrong... Error:{error.message}</p>;
 
   const contact = contacts?.find((contact) => contact.id === contactId);

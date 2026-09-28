@@ -8,6 +8,7 @@ import Badge from '../components/ui/Badge';
 import { isTaskOverdue } from '../features/activities/utils';
 import { format } from 'date-fns';
 import LinkButton from '../components/ui/LinkButton';
+import Loading from '../components/ui/Loading';
 
 const DealDetail = () => {
   const { id: dealId } = useParams();
@@ -53,7 +54,7 @@ const DealDetail = () => {
   const deal = deals?.find((deal) => deal.id === dealId);
 
   if (isDealsLoading || isContactsLoading || isActivitiesLoading) {
-    return <span>Loading...</span>;
+    return <Loading className="h-full" />;
   } else if (dealsError || contactsError || activitiesError) {
     return <span>{dealsError?.message || contactsError?.message || activitiesError?.message}</span>;
   } else if (!deal) return <p>The deal has not found.</p>;

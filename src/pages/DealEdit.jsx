@@ -2,6 +2,7 @@ import { useNavigate, useParams } from 'react-router';
 import DealForm from '../features/deals/components/DealForm';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getDeals, updateDeal } from '../features/deals/api/deals';
+import Loading from '../components/ui/Loading';
 
 const DealEdit = () => {
   const queryClient = useQueryClient();
@@ -26,7 +27,7 @@ const DealEdit = () => {
     },
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading className="h-full" />;
   else if (error) return <p>Someting went wrong... Error:{error.message}</p>;
 
   const deal = deals.find((deal) => deal.id === dealId);

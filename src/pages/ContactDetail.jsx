@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router';
 import { deleteContact, getContacts } from '../features/contacts/api/contacts';
 import Button from '../components/ui/Button';
 import LinkButton from '../components/ui/LinkButton';
+import Loading from '../components/ui/Loading';
 
 const ContactDetail = () => {
   const { id: contactId } = useParams();
@@ -30,7 +31,7 @@ const ContactDetail = () => {
   const contact = contacts?.find((contact) => contact.id === contactId);
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <Loading className="h-full" />;
   } else if (error) {
     return <span>{error.message}</span>;
   } else if (!contact) return <p>The contact has not found.</p>;
