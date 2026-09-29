@@ -1,7 +1,11 @@
 import { supabase } from '../../../lib/supabase';
 
 export const getContacts = async () => {
-  const { data: contacts, error } = await supabase.from('contacts').select('*');
+  const { data: contacts, error } = await supabase
+    .from('contacts')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .order('id', { ascending: false });
 
   if (error) throw new Error(error.message);
 
