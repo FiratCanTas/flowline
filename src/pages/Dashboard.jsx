@@ -81,7 +81,7 @@ const Dashboard = () => {
             {distributedStages?.map(({ stage, count }, index) => (
               <div
                 key={stage}
-                className={`flex items-center gap-2 ${index > 1 && 'hidden md:flex'}`}
+                className={`flex items-center gap-2 ${index > 1 ? 'hidden md:flex' : ''}`}
               >
                 <div className="text-text-muted w-22 text-sm font-semibold first-letter:uppercase">
                   {stage}
@@ -104,7 +104,7 @@ const Dashboard = () => {
             {overdueTasks?.slice(0, 2).map((overdueTask, index) => (
               <div
                 key={overdueTask.id}
-                className={`flex items-center justify-between py-1 ${index > 0 && 'hidden md:flex'}`}
+                className={`flex items-center justify-between py-1 ${index > 0 ? 'hidden md:flex' : ''}`}
               >
                 <p className="text-xs font-semibold">{overdueTask.title}</p>
                 <Badge variant="danger">Overdue</Badge>
@@ -118,7 +118,7 @@ const Dashboard = () => {
             {atRiskDeals?.slice(0, 2).map((atRiskDeal, index) => (
               <div
                 key={atRiskDeal.id}
-                className={`flex items-center justify-between py-1 ${index > 0 && 'hidden md:flex'}`}
+                className={`flex items-center justify-between py-1 ${index > 0 ? 'hidden md:flex' : ''}`}
               >
                 <p className="text-xs font-semibold">{atRiskDeal.title}</p>
                 <Badge variant="danger">Stale</Badge>
