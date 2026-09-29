@@ -13,6 +13,7 @@ const LogOutIcon = () => (
     stroke="currentColor"
     strokeWidth="2"
     strokeLinecap="round"
+    aria-hidden="true"
     strokeLinejoin="round"
     className="h-5 w-5"
   >
@@ -28,6 +29,7 @@ const SunIcon = () => (
     fill="none"
     stroke="currentColor"
     strokeWidth="2"
+    aria-hidden="true"
     strokeLinecap="round"
     className="h-5 w-5"
   >
@@ -44,7 +46,7 @@ const SunIcon = () => (
 );
 
 const MoonIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-5 w-5">
     <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" />
   </svg>
 );
