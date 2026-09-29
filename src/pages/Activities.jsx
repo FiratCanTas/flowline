@@ -105,7 +105,7 @@ const Activities = () => {
     return (
       <p>
         Something went wrong! Error:
-        {activitiesError.message || dealsError.message || contactsError.message}
+        {activitiesError?.message || dealsError?.message || contactsError?.message}
       </p>
     );
   else if (!activities.length) return <p>No activity has found!</p>;

@@ -28,7 +28,7 @@ const Dashboard = () => {
 
   if (isDealsLoading || isActivitiesLoading) return <Loading className="h-full" />;
   else if (dealsError || activitiesError)
-    return <p>Something went wrong! Error: {dealsError.message || activitiesError.message}</p>;
+    return <p>Something went wrong! Error: {dealsError?.message || activitiesError?.message}</p>;
 
   const distributedStages = getStageDistribution(deals);
 
