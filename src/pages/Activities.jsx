@@ -112,64 +112,67 @@ const Activities = () => {
         {activitiesError?.message || dealsError?.message || contactsError?.message}
       </p>
     );
-  else if (!activities.length) return <p>No activity has found!</p>;
 
   return (
     <div className="flex flex-col gap-6">
       <LinkButton to="./new" className="ms-auto self-center">
         Add New Activity
       </LinkButton>
-      <div className="flex flex-col gap-2">
-        {activities?.map(
-          ({ id, createdAt, isCompleted, type, title, dealId, contactId, dueDate }) => (
-            <div
-              key={id}
-              className={`border-border flex items-start justify-between rounded-xl border px-3 py-4 md:items-center ${isCompleted ? 'opacity-50' : ''}`}
-            >
-              <div className="flex min-w-0 flex-1 flex-col items-start gap-1 md:flex-row md:items-center md:gap-3">
-                <Badge className="first-letter:uppercase">{type}</Badge>
-                <div className="w-full min-w-0 md:flex-1">
-                  <p className={`font-semibold ${isCompleted ? 'line-through' : ''}`}>{title}</p>
-                  <p className="text-text-muted truncate">
-                    <span>{deals?.find((deal) => deal.id === dealId)?.title}</span> ·{' '}
-                    <span>{contacts?.find((contact) => contact.id === contactId)?.name}</span> ·{' '}
-                    <span>{format(new Date(createdAt), 'd MMMM')}</span>
-                  </p>
+      {!activities.length ? (
+        <p className="text-text-muted self-center text-sm">No activity has found.</p>
+      ) : (
+        <div className="flex flex-col gap-2">
+          {activities?.map(
+            ({ id, createdAt, isCompleted, type, title, dealId, contactId, dueDate }) => (
+              <div
+                key={id}
+                className={`border-border flex items-start justify-between rounded-xl border px-3 py-4 md:items-center ${isCompleted ? 'opacity-50' : ''}`}
+              >
+                <div className="flex min-w-0 flex-1 flex-col items-start gap-1 md:flex-row md:items-center md:gap-3">
+                  <Badge className="first-letter:uppercase">{type}</Badge>
+                  <div className="w-full min-w-0 md:flex-1">
+                    <p className={`font-semibold ${isCompleted ? 'line-through' : ''}`}>{title}</p>
+                    <p className="text-text-muted truncate">
+                      <span>{deals?.find((deal) => deal.id === dealId)?.title}</span> ·{' '}
+                      <span>{contacts?.find((contact) => contact.id === contactId)?.name}</span> ·{' '}
+                      <span>{format(new Date(createdAt), 'd MMMM')}</span>
+                    </p>
+                  </div>
+                </div>
+                <div className="flex shrink-0 items-center gap-2">
+                  {isCompleted ? (
+                    <CheckIcon />
+                  ) : type === 'task' ? (
+                    isTaskOverdue({ type, dueDate, isCompleted }) ? (
+                      <Badge variant="danger" className="max-w-max flex-1 text-nowrap">
+                        Overdue
+                      </Badge>
+                    ) : (
+                      <Badge className="max-w-max flex-1 text-nowrap">
+                        {format(new Date(dueDate), 'd MMMM')}
+                      </Badge>
+                    )
+                  ) : null}
+                  <Link
+                    className="hover:bg-surface-2 focus-visible:outline-focus-ring rounded-md p-2 outline-offset-2"
+                    to={`./${id}/edit`}
+                    aria-label={`Edit ${title}`}
+                  >
+                    <PencilIcon />
+                  </Link>
+                  <IconButton
+                    aria-label={`Delete ${title}`}
+                    onClick={() => handleDeleteActivity(id)}
+                    disabled={isPending}
+                  >
+                    <TrashIcon />
+                  </IconButton>
                 </div>
               </div>
-              <div className="flex shrink-0 items-center gap-2">
-                {isCompleted ? (
-                  <CheckIcon />
-                ) : type === 'task' ? (
-                  isTaskOverdue({ type, dueDate, isCompleted }) ? (
-                    <Badge variant="danger" className="max-w-max flex-1 text-nowrap">
-                      Overdue
-                    </Badge>
-                  ) : (
-                    <Badge className="max-w-max flex-1 text-nowrap">
-                      {format(new Date(dueDate), 'd MMMM')}
-                    </Badge>
-                  )
-                ) : null}
-                <Link
-                  className="hover:bg-surface-2 focus-visible:outline-focus-ring rounded-md p-2 outline-offset-2"
-                  to={`./${id}/edit`}
-                  aria-label={`Edit ${title}`}
-                >
-                  <PencilIcon />
-                </Link>
-                <IconButton
-                  aria-label={`Delete ${title}`}
-                  onClick={() => handleDeleteActivity(id)}
-                  disabled={isPending}
-                >
-                  <TrashIcon />
-                </IconButton>
-              </div>
-            </div>
-          ),
-        )}
-      </div>
+            ),
+          )}
+        </div>
+      )}
     </div>
   );
 };
