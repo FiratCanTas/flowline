@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router';
 import { getActivities, updateActivity } from '../features/activities/api/activities';
 import ActivityForm from '../features/activities/components/ActivityForm';
 import Loading from '../components/ui/Loading';
+import ErrorMessage from '../components/ui/ErrorMessage';
 
 const ActivityEdit = () => {
   const { id: activityId } = useParams();
@@ -28,7 +29,10 @@ const ActivityEdit = () => {
   });
 
   if (isLoading) return <Loading className="h-full" />;
-  else if (error) return <p>Something went wrong! Error: {error?.message}</p>;
+  else if (error)
+    return (
+      <ErrorMessage className="h-full">Something went wrong! Error: {error?.message}</ErrorMessage>
+    );
 
   const activity = activities?.find((activity) => activity.id === activityId);
 

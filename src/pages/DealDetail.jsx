@@ -9,6 +9,7 @@ import { isTaskOverdue } from '../features/activities/utils';
 import { format } from 'date-fns';
 import LinkButton from '../components/ui/LinkButton';
 import Loading from '../components/ui/Loading';
+import ErrorMessage from '../components/ui/ErrorMessage';
 
 const DealDetail = () => {
   const { id: dealId } = useParams();
@@ -56,7 +57,12 @@ const DealDetail = () => {
   if (isDealsLoading || isContactsLoading || isActivitiesLoading) {
     return <Loading className="h-full" />;
   } else if (dealsError || contactsError || activitiesError) {
-    return <span>{dealsError?.message || contactsError?.message || activitiesError?.message}</span>;
+    return (
+      <ErrorMessage className="h-full">
+        Something went wrong! Error:
+        {dealsError?.message || contactsError?.message || activitiesError?.message}
+      </ErrorMessage>
+    );
   } else if (!deal) return <p>The deal has not found.</p>;
 
   const activitiesOfDeal = activities?.filter((activity) => activity?.dealId === dealId);

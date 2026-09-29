@@ -3,6 +3,7 @@ import DealForm from '../features/deals/components/DealForm';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getDeals, updateDeal } from '../features/deals/api/deals';
 import Loading from '../components/ui/Loading';
+import ErrorMessage from '../components/ui/ErrorMessage';
 
 const DealEdit = () => {
   const queryClient = useQueryClient();
@@ -28,7 +29,10 @@ const DealEdit = () => {
   });
 
   if (isLoading) return <Loading className="h-full" />;
-  else if (error) return <p>Someting went wrong... Error:{error.message}</p>;
+  else if (error)
+    return (
+      <ErrorMessage className="h-full">Something went wrong! Error: {error.message}</ErrorMessage>
+    );
 
   const deal = deals.find((deal) => deal.id === dealId);
   if (!deal) return <p>The deal is not found.</p>;

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router';
 import { getContacts, updateContact } from '../features/contacts/api/contacts';
 import ContactForm from '../features/contacts/components/ContactForm';
 import Loading from '../components/ui/Loading';
+import ErrorMessage from '../components/ui/ErrorMessage';
 
 const ContactEdit = () => {
   const queryClient = useQueryClient();
@@ -28,7 +29,13 @@ const ContactEdit = () => {
   });
 
   if (isLoading) return <Loading className="h-full" />;
-  else if (error) return <p>Someting went wrong... Error:{error.message}</p>;
+  else if (error)
+    return (
+      <ErrorMessage className="h-full">
+        Something went wrong! Error:
+        {error.message}
+      </ErrorMessage>
+    );
 
   const contact = contacts?.find((contact) => contact.id === contactId);
 

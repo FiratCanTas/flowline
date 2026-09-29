@@ -4,6 +4,7 @@ import { deleteContact, getContacts } from '../features/contacts/api/contacts';
 import Button from '../components/ui/Button';
 import LinkButton from '../components/ui/LinkButton';
 import Loading from '../components/ui/Loading';
+import ErrorMessage from '../components/ui/ErrorMessage';
 
 const ContactDetail = () => {
   const { id: contactId } = useParams();
@@ -33,7 +34,12 @@ const ContactDetail = () => {
   if (isLoading) {
     return <Loading className="h-full" />;
   } else if (error) {
-    return <span>{error.message}</span>;
+    return (
+      <ErrorMessage className="h-full">
+        Something went wrong! Error:
+        {error.message}
+      </ErrorMessage>
+    );
   } else if (!contact) return <p>The contact has not found.</p>;
 
   const { name, company, position, email, phone } = contact;
