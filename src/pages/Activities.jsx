@@ -120,12 +120,12 @@ const Activities = () => {
           ({ id, createdAt, isCompleted, type, title, dealId, contactId, dueDate }) => (
             <div
               key={id}
-              className={`border-border flex items-start justify-between rounded-xl border px-3 py-4 md:items-center ${isCompleted && 'opacity-50'}`}
+              className={`border-border flex items-start justify-between rounded-xl border px-3 py-4 md:items-center ${isCompleted ? 'opacity-50' : ''}`}
             >
               <div className="flex min-w-0 flex-1 flex-col items-start gap-1 md:flex-row md:items-center md:gap-3">
                 <Badge className="first-letter:uppercase">{type}</Badge>
                 <div className="w-full min-w-0 md:flex-1">
-                  <p className={`font-semibold ${isCompleted && 'line-through'}`}>{title}</p>
+                  <p className={`font-semibold ${isCompleted ? 'line-through' : ''}`}>{title}</p>
                   <p className="text-text-muted truncate">
                     <span>{deals?.find((deal) => deal.id === dealId)?.title}</span> ·{' '}
                     <span>{contacts?.find((contact) => contact.id === contactId)?.name}</span> ·{' '}
