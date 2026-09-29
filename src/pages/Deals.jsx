@@ -36,7 +36,7 @@ const Deals = () => {
     queryFn: getActivities,
   });
 
-  const { isLoading, mutate } = useMutation({
+  const { isPending, mutate } = useMutation({
     mutationKey: ['update deal'],
     mutationFn: (data) => {
       const { id, updatedDeal } = data;
@@ -57,7 +57,7 @@ const Deals = () => {
   if (isDealsLoading || isContactsLoading || isActivitiesLoading) {
     return <Loading className="h-full" />;
   } else if (dealsError || contactsError || activitiesError) {
-    return <span>{dealsError?.message || contactsError?.message || activitiesError?.name}</span>;
+    return <span>{dealsError?.message || contactsError?.message || activitiesError?.message}</span>;
   }
 
   const categorisedDeals = deals?.reduce(
@@ -96,7 +96,7 @@ const Deals = () => {
                         value={dealCategory}
                         onChange={(event) => handleSelect(event, id)}
                         className="w-full"
-                        disabled={isLoading}
+                        disabled={isPending}
                       >
                         {Object.keys(categorisedDeals)?.map((filteredCategory) => (
                           <option key={filteredCategory} value={filteredCategory}>
