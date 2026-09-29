@@ -4,6 +4,7 @@ import { signIn } from '../features/auth/api/auth';
 import { useNavigate } from 'react-router';
 import Loading from '../components/ui/Loading';
 import Button from '../components/ui/Button';
+import ErrorMessage from '../components/ui/ErrorMessage';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -29,7 +30,12 @@ const Login = () => {
           <p className="text-text-muted text-sm">Sign in to your account</p>
         </div>
         <div className="flex flex-col gap-4">
-          {error && <p className="text-danger text-sm">{error.message}</p>}
+          {error && (
+            <ErrorMessage className="h-full">
+              Something went wrong! Error:
+              {error.message}
+            </ErrorMessage>
+          )}
           <LoginForm onSubmit={(formData) => signInMutation(formData)} disabled={isPending} />
           <Button
             variant="secondary"
