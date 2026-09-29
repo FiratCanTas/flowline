@@ -12,6 +12,8 @@ import IconButton from '../components/ui/IconButton';
 
 const CheckIcon = () => (
   <svg
+    role="img"
+    aria-label="Completed"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
