@@ -7,6 +7,7 @@ import Badge from '../components/ui/Badge';
 import { getActivities } from '../features/activities/api/activities';
 import LinkButton from '../components/ui/LinkButton';
 import Loading from '../components/ui/Loading';
+import ErrorMessage from '../components/ui/ErrorMessage';
 
 const Deals = () => {
   const queryClient = useQueryClient();
@@ -57,7 +58,12 @@ const Deals = () => {
   if (isDealsLoading || isContactsLoading || isActivitiesLoading) {
     return <Loading className="h-full" />;
   } else if (dealsError || contactsError || activitiesError) {
-    return <span>{dealsError?.message || contactsError?.message || activitiesError?.message}</span>;
+    return (
+      <ErrorMessage className="h-full">
+        Something went wrong! Error:
+        {dealsError?.message || contactsError?.message || activitiesError?.message}
+      </ErrorMessage>
+    );
   }
 
   const categorisedDeals = deals?.reduce(

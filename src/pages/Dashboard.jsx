@@ -6,6 +6,7 @@ import { isTaskOverdue } from '../features/activities/utils';
 import Badge from '../components/ui/Badge';
 import { getActivities } from '../features/activities/api/activities';
 import Loading from '../components/ui/Loading';
+import ErrorMessage from '../components/ui/ErrorMessage';
 
 const Dashboard = () => {
   const {
@@ -28,7 +29,11 @@ const Dashboard = () => {
 
   if (isDealsLoading || isActivitiesLoading) return <Loading className="h-full" />;
   else if (dealsError || activitiesError)
-    return <p>Something went wrong! Error: {dealsError?.message || activitiesError?.message}</p>;
+    return (
+      <ErrorMessage className="h-full">
+        Something went wrong! Error: {dealsError?.message || activitiesError?.message}
+      </ErrorMessage>
+    );
 
   const distributedStages = getStageDistribution(deals);
 

@@ -4,6 +4,7 @@ import { Link, useSearchParams } from 'react-router';
 import Button from '../components/ui/Button';
 import LinkButton from '../components/ui/LinkButton';
 import Loading from '../components/ui/Loading';
+import ErrorMessage from '../components/ui/ErrorMessage';
 
 const Contacts = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -90,7 +91,9 @@ const Contacts = () => {
   if (isLoading) {
     return <Loading className="h-full" />;
   } else if (error) {
-    return <span>{error.message}</span>;
+    return (
+      <ErrorMessage className="h-full">Something went wrong! Error: {error.message}</ErrorMessage>
+    );
   }
 
   return (
