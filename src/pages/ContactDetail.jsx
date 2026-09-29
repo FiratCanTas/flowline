@@ -5,6 +5,7 @@ import Button from '../components/ui/Button';
 import LinkButton from '../components/ui/LinkButton';
 import Loading from '../components/ui/Loading';
 import ErrorMessage from '../components/ui/ErrorMessage';
+import EmptyState from '../components/ui/EmptyState';
 
 const ContactDetail = () => {
   const { id: contactId } = useParams();
@@ -40,7 +41,7 @@ const ContactDetail = () => {
         {error.message}
       </ErrorMessage>
     );
-  } else if (!contact) return <p>The contact has not found.</p>;
+  } else if (!contact) return <EmptyState className="h-full">Contact not found.</EmptyState>;
 
   const { name, company, position, email, phone } = contact;
 

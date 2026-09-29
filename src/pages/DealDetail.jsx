@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import LinkButton from '../components/ui/LinkButton';
 import Loading from '../components/ui/Loading';
 import ErrorMessage from '../components/ui/ErrorMessage';
+import EmptyState from '../components/ui/EmptyState';
 
 const DealDetail = () => {
   const { id: dealId } = useParams();
@@ -63,7 +64,7 @@ const DealDetail = () => {
         {dealsError?.message || contactsError?.message || activitiesError?.message}
       </ErrorMessage>
     );
-  } else if (!deal) return <p>The deal has not found.</p>;
+  } else if (!deal) return <EmptyState className="h-full">Deal not found.</EmptyState>;
 
   const activitiesOfDeal = activities?.filter((activity) => activity?.dealId === dealId);
 

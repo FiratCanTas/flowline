@@ -4,6 +4,7 @@ import { getActivities, updateActivity } from '../features/activities/api/activi
 import ActivityForm from '../features/activities/components/ActivityForm';
 import Loading from '../components/ui/Loading';
 import ErrorMessage from '../components/ui/ErrorMessage';
+import EmptyState from '../components/ui/EmptyState';
 
 const ActivityEdit = () => {
   const { id: activityId } = useParams();
@@ -36,7 +37,7 @@ const ActivityEdit = () => {
 
   const activity = activities?.find((activity) => activity.id === activityId);
 
-  if (!activity) return <p>The activity is not found.</p>;
+  if (!activity) return <EmptyState className="h-full">Activity not found.</EmptyState>;
 
   return (
     <ActivityForm

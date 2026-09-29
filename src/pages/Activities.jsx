@@ -10,6 +10,7 @@ import LinkButton from '../components/ui/LinkButton';
 import Loading from '../components/ui/Loading';
 import IconButton from '../components/ui/IconButton';
 import ErrorMessage from '../components/ui/ErrorMessage';
+import EmptyState from '../components/ui/EmptyState';
 
 const CheckIcon = () => (
   <svg
@@ -120,7 +121,7 @@ const Activities = () => {
         Add New Activity
       </LinkButton>
       {!activities.length ? (
-        <p className="text-text-muted self-center text-sm">No activity has found.</p>
+        <EmptyState>No activities yet.</EmptyState>
       ) : (
         <div className="flex flex-col gap-2">
           {activities?.map(

@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getDeals, updateDeal } from '../features/deals/api/deals';
 import Loading from '../components/ui/Loading';
 import ErrorMessage from '../components/ui/ErrorMessage';
+import EmptyState from '../components/ui/EmptyState';
 
 const DealEdit = () => {
   const queryClient = useQueryClient();
@@ -35,7 +36,7 @@ const DealEdit = () => {
     );
 
   const deal = deals.find((deal) => deal.id === dealId);
-  if (!deal) return <p>The deal is not found.</p>;
+  if (!deal) return <EmptyState className="h-full">Deal not found.</EmptyState>;
   return (
     <div>
       <DealForm

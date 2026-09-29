@@ -4,6 +4,7 @@ import { getContacts, updateContact } from '../features/contacts/api/contacts';
 import ContactForm from '../features/contacts/components/ContactForm';
 import Loading from '../components/ui/Loading';
 import ErrorMessage from '../components/ui/ErrorMessage';
+import EmptyState from '../components/ui/EmptyState';
 
 const ContactEdit = () => {
   const queryClient = useQueryClient();
@@ -39,7 +40,7 @@ const ContactEdit = () => {
 
   const contact = contacts?.find((contact) => contact.id === contactId);
 
-  if (!contact) return <p>The contact is not found.</p>;
+  if (!contact) return <EmptyState className="h-full">Contact not found.</EmptyState>;
 
   return (
     <div>
