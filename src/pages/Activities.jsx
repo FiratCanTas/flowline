@@ -9,6 +9,7 @@ import { Link } from 'react-router';
 import LinkButton from '../components/ui/LinkButton';
 import Loading from '../components/ui/Loading';
 import IconButton from '../components/ui/IconButton';
+import ErrorMessage from '../components/ui/ErrorMessage';
 
 const CheckIcon = () => (
   <svg
@@ -107,10 +108,10 @@ const Activities = () => {
     return <Loading className="h-full" />;
   else if (activitiesError || dealsError || contactsError)
     return (
-      <p>
-        Something went wrong! Error:
+      <ErrorMessage className="h-full">
+        Something went wrong! Error:{' '}
         {activitiesError?.message || dealsError?.message || contactsError?.message}
-      </p>
+      </ErrorMessage>
     );
 
   return (
