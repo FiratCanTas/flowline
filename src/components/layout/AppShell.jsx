@@ -79,10 +79,14 @@ const AppShell = () => {
     },
   });
 
+  const handleSidebarByKeyboard = (event) => {
+    if (event.key === 'Escape' && isSidebarOpen) setIsSidebarOpen(false);
+  };
+
   if (isPending) return <Loading className="h-dvh" />;
 
   return (
-    <div className="flex h-dvh">
+    <div className="flex h-dvh" onKeyDown={handleSidebarByKeyboard}>
       {isSidebarOpen && (
         <div
           onClick={() => setIsSidebarOpen(false)}
