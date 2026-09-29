@@ -26,7 +26,10 @@ const convertToDatabaseForm = (deal) => {
 };
 
 export const getDeals = async () => {
-  const { data, error } = await supabase.from('deals').select('*');
+  const { data, error } = await supabase
+    .from('deals')
+    .select('*')
+    .order('created_at', { ascending: false });
 
   if (error) throw new Error(error.message);
 
