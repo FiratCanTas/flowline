@@ -87,6 +87,12 @@ const AppShell = () => {
 
   return (
     <div className="flex h-dvh" onKeyDown={handleSidebarByKeyboard}>
+      <a
+        href="#main-content"
+        className="bg-accent text-accent-foreground focus-visible:outline-focus-ring sr-only text-sm font-medium outline-offset-2 focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-60 focus:rounded-md focus:px-4 focus:py-2"
+      >
+        Skip to main content
+      </a>
       {isSidebarOpen && (
         <div
           onClick={() => setIsSidebarOpen(false)}
@@ -135,7 +141,7 @@ const AppShell = () => {
           </IconButton>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-6">
+        <main id="main-content" className="flex-1 overflow-y-auto p-6">
           <Outlet />
         </main>
       </div>
