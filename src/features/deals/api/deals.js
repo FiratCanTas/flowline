@@ -1,29 +1,5 @@
 import { supabase } from '../../../lib/supabase';
-
-const convertToDeal = (data) => {
-  const { id, title, value, stage, created_at, contact_id } = data;
-
-  return {
-    id,
-    title,
-    value,
-    stage,
-    createdAt: created_at,
-    contactId: contact_id,
-  };
-};
-const convertToDatabaseForm = (deal) => {
-  const { id, title, value, stage, createdAt, contactId } = deal;
-
-  return {
-    id,
-    title,
-    value,
-    stage,
-    created_at: createdAt,
-    contact_id: contactId,
-  };
-};
+import { convertToDatabaseForm, convertToDeal } from './dealMapper';
 
 export const getDeals = async () => {
   const { data, error } = await supabase
