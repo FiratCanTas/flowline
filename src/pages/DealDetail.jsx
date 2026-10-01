@@ -118,11 +118,7 @@ const DealDetail = () => {
               >
                 <div className="flex min-w-0 flex-1 items-center gap-3">
                   <Badge className="shrink-0 first-letter:uppercase">{type}</Badge>
-                  <p
-                    className={`min-w-0 truncate font-semibold ${isCompleted ? 'line-through' : ''}`}
-                  >
-                    {title}
-                  </p>
+                  <p className={`font-semibold ${isCompleted ? 'line-through' : ''}`}>{title}</p>
                 </div>
                 {!isCompleted &&
                   type === 'task' &&
