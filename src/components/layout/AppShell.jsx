@@ -1,6 +1,6 @@
 import { Outlet, useMatches } from 'react-router';
 import NavItem from './NavItem';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { signOut } from '../../features/auth/api/auth';
 import IconButton from '../ui/IconButton';
@@ -142,7 +142,9 @@ const AppShell = () => {
         </header>
 
         <main id="main-content" className="flex-1 overflow-y-auto p-6">
-          <Outlet />
+          <Suspense fallback={<Loading className="h-full" />}>
+            <Outlet />
+          </Suspense>
         </main>
       </div>
     </div>

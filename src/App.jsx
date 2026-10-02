@@ -1,20 +1,22 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router';
-import Dashboard from './pages/Dashboard';
-import Contacts from './pages/Contacts';
-import Deals from './pages/Deals';
-import Activities from './pages/Activities';
-import NotFound from './pages/NotFound';
 import AppShell from './components/layout/AppShell';
-import ContactDetail from './pages/ContactDetail';
-import ContactNew from './pages/ContactNew';
-import ContactEdit from './pages/ContactEdit';
-import DealNew from './pages/DealNew';
-import DealEdit from './pages/DealEdit';
-import DealDetail from './pages/DealDetail';
-import ActivityNew from './pages/ActivityNew';
-import ActivityEdit from './pages/ActivityEdit';
-import Login from './pages/Login';
 import ProtectedRoute from './routes/ProtectedRoute';
+import { lazy } from 'react';
+import Login from './pages/Login';
+import NotFound from './pages/NotFound';
+
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Contacts = lazy(() => import('./pages/Contacts'));
+const ContactDetail = lazy(() => import('./pages/ContactDetail'));
+const ContactEdit = lazy(() => import('./pages/ContactEdit'));
+const ContactNew = lazy(() => import('./pages/ContactNew'));
+const Activities = lazy(() => import('./pages/Activities'));
+const ActivityEdit = lazy(() => import('./pages/ActivityEdit'));
+const ActivityNew = lazy(() => import('./pages/ActivityNew'));
+const Deals = lazy(() => import('./pages/Deals'));
+const DealDetail = lazy(() => import('./pages/DealDetail'));
+const DealEdit = lazy(() => import('./pages/DealEdit'));
+const DealNew = lazy(() => import('./pages/DealNew'));
 
 const router = createBrowserRouter(
   createRoutesFromElements(
