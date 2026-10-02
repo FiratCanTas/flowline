@@ -3,10 +3,15 @@ import userEvent from '@testing-library/user-event';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { describe, test, expect, vi } from 'vitest';
 import DealForm from './DealForm';
+import { MemoryRouter } from 'react-router';
 
 const renderWithClient = (ui) => {
   const queryClient = new QueryClient();
-  return render(<QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>);
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter>{ui}</MemoryRouter>
+    </QueryClientProvider>,
+  );
 };
 
 describe('DealForm', () => {
