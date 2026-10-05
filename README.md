@@ -11,7 +11,7 @@ Click **Sign in with demo account** on the login page to explore the app with sa
 ## Features
 
 - **Contacts** – create, edit, delete, search by name or company, sort, paginate
-- **Deals** – pipeline board grouped by stage, with detail, create, edit and delete
+- **Deals** – pipeline board grouped by stage, with details, create, edit, and delete
 - **Activities** – tasks (with due dates) and notes linked to deals; tasks can be marked as completed
 - **Dashboard** – weighted pipeline value, overdue tasks, at-risk deals, deals per stage
 - **Business rules** beyond plain CRUD:
@@ -35,9 +35,32 @@ Click **Sign in with demo account** on the login page to explore the app with sa
 - ESLint + Prettier
 - Deployed on Vercel (every push to `main`)
 
+## Key decisions
+
+**Business rules are pure functions, not component code.**
+`isDealStale`, `isActionlessDeal` and `getWeightedPipelineValue` live in `features/deals/utils.js`. They take data in and return a value, so unit tests run them without React, the network, or the clock (`today` is a parameter). Pages only call them.
+
+**Data mapping is separate from data fetching.**
+`dealMapper.js` and `activityMapper.js` convert between database rows and app objects and do not import Supabase. A test that imports an API file would load the Supabase client; a mapper test does not.
+
+**Server state in TanStack Query, everything else derived.**
+Lists come from queries. The filtered, sorted, and paginated contacts view is computed during render from the URL (`?search=&sort=&page=`), so there is no duplicated state, and the view survives a refresh.
+
+**Feature folders and shared UI only after repetition.**
+Each feature owns its `api/`, `components/`, `schema.js` and `utils.js`. `Select`, `Loading`, `ErrorMessage` and `EmptyState` were extracted when the same markup appeared in several places. One-off controls (checkbox, radio) stay hand-written. A `textarea` primitive and a shared page header were left out because they were not repeated enough yet.
+
+**Design tokens with light and dark theme from the start.**
+Colors are CSS variables on `:root`, redefined under `.dark`, and exposed to Tailwind v4 through `@theme`. Components use names like `bg-surface-1` and `text-text-muted`, never raw colors. The saved theme is applied by a small inline script in `index.html` before React renders, because applying it in a `useEffect` caused a white flash on refresh.
+
+**Security lives in the database.**
+This is a client-side app, so everything in the bundle is public, including the demo account's password. Row Level Security (`owner_id = auth.uid()`) on all three tables is what limits an account to its own rows.
+
+**Performance: measure the bundle, optimize only what matters.**
+Route-level `React.lazy` cut the main bundle from 198.82 kB to 125.56 kB gzip. The remaining weight is mostly the Supabase client (about 61 kB gzip), which the first screen needs anyway, so I stopped there. I saw the sidebar re-render while typing in the contacts search, judged the cost negligible (four nav items, no DOM change), and did not add `React.memo`.
+
 ## Getting started
 
-The live demo is the quickest way to try the app. To run it locally you need your own Supabase project with `contacts`, `deals` and `activities` tables. Each table has an `owner_id` column and a Row Level Security policy `owner_id = auth.uid()`.
+The live demo is the quickest way to try the app. To run it locally, you need your own Supabase project with `contacts`, `deals` and `activities` tables. Each table has an `owner_id` column and a Row Level Security policy `owner_id = auth.uid()`.
 
 ```bash
 git clone https://github.com/FiratCanTas/flowline.git
@@ -98,4 +121,4 @@ supabase/        demo seed script
 - The mobile drawer closes with Esc only while focus is inside the app; clicking empty space moves focus to `body`.
 - The stale threshold depends on the deal's stage, and changing the stage does not reset the clock.
 - Single-user accounts only; multi-user teams are out of scope.
-- The demo account is public. Row Level Security keeps it limited to its own data.
+- The demo account is public. Row-level security keeps it limited to its own data.
