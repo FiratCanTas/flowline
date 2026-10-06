@@ -45,7 +45,13 @@ export const deleteContact = async (id) => {
     .select()
     .single();
 
-  if (error) throw new Error(error.message);
+  if (error?.code === '23503') {
+    throw new Error(
+      "This contact can't be deleted because it still has deals or activities. Delete them first.",
+    );
+  } else if (error) {
+    throw new Error("Couldn't delete the contact. Please try again.");
+  }
 
   return deletedContact;
 };

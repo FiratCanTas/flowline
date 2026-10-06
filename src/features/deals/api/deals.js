@@ -46,7 +46,13 @@ export const updateDeal = async (id, newDealData) => {
 export const deleteDeal = async (id) => {
   const { data, error } = await supabase.from('deals').delete().eq('id', id).select().single();
 
-  if (error) throw new Error(error.message);
+  if (error?.code === '23503') {
+    throw new Error(
+      "This deal can't be deleted because it still has activities. Delete the activities first.",
+    );
+  } else if (error) {
+    throw new Error("Couldn't delete the deal. Please try again.");
+  }
 
   const deletedDeal = convertToDeal(data);
 
