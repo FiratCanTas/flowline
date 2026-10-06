@@ -44,7 +44,11 @@ const DealDetail = () => {
     queryFn: getActivities,
   });
 
-  const { mutate: deleteDealMutation, isPending } = useMutation({
+  const {
+    mutate: deleteDealMutation,
+    isPending,
+    error: dealMutationError,
+  } = useMutation({
     mutationKey: ['delete deal'],
     mutationFn: deleteDeal,
     onSuccess: () => {
@@ -105,6 +109,9 @@ const DealDetail = () => {
             Delete
           </Button>
         </div>
+        {dealMutationError && (
+          <ErrorMessage className="text-start">{dealMutationError.message}</ErrorMessage>
+        )}
       </div>
 
       <div className="flex flex-col gap-2">

@@ -21,7 +21,11 @@ const ContactDetail = () => {
     queryFn: getContacts,
   });
 
-  const { mutate: deleteContactMutation, isPending } = useMutation({
+  const {
+    mutate: deleteContactMutation,
+    isPending,
+    error: errorContactMutation,
+  } = useMutation({
     mutationKey: ['delete contact'],
     mutationFn: deleteContact,
     onSuccess: () => {
@@ -79,6 +83,9 @@ const ContactDetail = () => {
           Delete
         </Button>
       </div>
+      {errorContactMutation && (
+        <ErrorMessage className="text-start">{errorContactMutation.message}</ErrorMessage>
+      )}
     </div>
   );
 };
